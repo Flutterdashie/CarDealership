@@ -87,6 +87,8 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -112,12 +114,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Models\DataModels\CarModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarModel.edmx</DependentUpon>
+      <LastGenOutput>CarModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DataModels\CarModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarModel.edmx</DependentUpon>
+      <LastGenOutput>CarModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -126,6 +143,39 @@
       <DependentUpon>201903201416351_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DataModels\Car.cs">
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\CarModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\CarModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\CarModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\Contact.cs">
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\Make.cs">
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\Model.cs">
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\Purchase.cs">
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModels\Special.cs">
+      <DependentUpon>CarModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Security\AppRole.cs" />
     <Compile Include="Models\Security\AppUser.cs" />
     <Compile Include="Models\Security\LoginAttempt.cs" />
@@ -134,6 +184,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="Models\DataModels\CarModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CarModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataModels\CarModel.edmx.diagram">
+      <DependentUpon>CarModel.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -149,6 +206,9 @@
     <EmbeddedResource Include="Migrations\201903201416351_init.resx">
       <DependentUpon>201903201416351_init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

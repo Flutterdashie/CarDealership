@@ -48,7 +48,7 @@ namespace CarDealership.Migrations
             userMgr.Create(user, "testing123");
 
             // add the user to the admin role
-            userMgr.AddToRole(user.Id, "admin");
+            userMgr.AddToRole(user.Id, "Admin");
 
 
         }

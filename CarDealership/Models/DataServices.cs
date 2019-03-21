@@ -13,7 +13,8 @@ namespace CarDealership.Models
     public class DataServices
     {
         private static DataHandlerEF _repo = new DataHandlerEF(); //TODO: Setup interface and factory
-        public IEnumerable<JObject> GetVehicles(CarSearchFilters filters, RoleType role)
+
+        public IEnumerable<JObject> GetVehicles(CarSearchFilters filters, RoleType role, bool isNew = false)
         {
             int maxYear = filters.MaxYear ?? 3000;
             int minYear = filters.MinYear ?? 0;
@@ -22,7 +23,7 @@ namespace CarDealership.Models
             string makeModelYear = filters.MakeModelYear ?? string.Empty;
 
             IEnumerable<Car> resultCars = _repo.SearchCars(role == RoleType.Admin, role == RoleType.Sales,
-                filters.IsNew, minYear, maxYear, minPrice, maxPrice,
+                isNew, minYear, maxYear, minPrice, maxPrice,
                 makeModelYear);
             foreach (Car resultCar in resultCars)
             {
@@ -36,6 +37,15 @@ namespace CarDealership.Models
             return _repo.AddVehicle(FromJSON(input)).CarID;
         }
 
+        public void DeleteVehicle(int id)
+        {
+            _repo.DeleteVehicle(id);
+        }
+
+        public JObject GetVehicleByID(int id)
+        {
+            return ToJSON(_repo.GetVehicleByID(id));
+        }
 
         private static JObject ToJSON(Car input)
         {
@@ -49,7 +59,7 @@ namespace CarDealership.Models
                 {"Transmission", input.Transmission},
                 {"Color", input.Color},
                 {"Interior", input.Interior},
-                {"Mileage", input.IsNew ? "New" : $"{input.Mileage:N}"},
+                {"Mileage", input.IsNew ? "New" : $"{input.Mileage:N0}"},
                 {"VIN", input.VIN},
                 {"SalePrice", $"{input.SalePrice:C}"},
                 {"MSRP", $"{input.MSRP:C}"}

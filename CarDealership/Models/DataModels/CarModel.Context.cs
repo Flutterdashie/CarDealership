@@ -12,6 +12,8 @@ namespace CarDealership.Models.DataModels
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class CarDealershipEntities : DbContext
     {
@@ -31,5 +33,14 @@ namespace CarDealership.Models.DataModels
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<Special> Specials { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
+    
+        public virtual int DeleteByID(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteByID", iDParameter);
+        }
     }
 }

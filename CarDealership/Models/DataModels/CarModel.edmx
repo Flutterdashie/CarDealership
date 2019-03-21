@@ -10,7 +10,7 @@
             <PropertyRef Name="CarID" />
           </Key>
           <Property Name="CarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="VIN" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="VIN" Type="char" MaxLength="17" Nullable="false" />
           <Property Name="BodyStyle" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Transmission" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Interior" Type="varchar" MaxLength="20" Nullable="false" />
@@ -124,6 +124,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CarDealershipModelStoreContainer">
           <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
@@ -157,7 +160,7 @@
             <PropertyRef Name="CarID" />
           </Key>
           <Property Name="CarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VIN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VIN" Type="String" MaxLength="17" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="BodyStyle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Transmission" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Interior" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
@@ -290,6 +293,9 @@
             <End Role="Make" EntitySet="Makes" />
             <End Role="Model" EntitySet="Models" />
           </AssociationSet>
+          <FunctionImport Name="DeleteByID">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="fk_Models_Makes">
           <End Type="CarDealershipModel.Make" Role="Make" Multiplicity="1" />
@@ -386,6 +392,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteByID" FunctionName="CarDealershipModel.Store.DeleteByID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

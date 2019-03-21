@@ -4,26 +4,44 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using CarDealership.Models;
+using CarDealership.Models.ServiceModels;
 
 namespace CarDealership.Controllers
 {
     [AllowAnonymous]
     public class InventoryController : ApiController
     {
-        public IHttpActionResult New()
+        private static DataServices _dataSource = new DataServices();
+
+        [HttpGet]
+        [HttpPost]
+        [Route("Inventory/New")]
+        public IHttpActionResult New([FromBody] CarSearchFilters filters)
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff, true));
         }
 
-        public IHttpActionResult Used()
+        [HttpGet]
+        [HttpPost]
+        [Route("Inventory/Used")]
+        public IHttpActionResult Used([FromBody] CarSearchFilters filters)
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff));
         }
 
+        [HttpGet]
         [Route("Inventory/Details/{id}")]
         public IHttpActionResult Details(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_dataSource.GetVehicleByID(id));
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

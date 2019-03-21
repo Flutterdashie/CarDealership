@@ -34,6 +34,14 @@ namespace CarDealership.Controllers
             throw new NotImplementedException();
         }
 
+        [Route("Admin/DeleteVehicle/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteVehicle(int id)
+        {
+            _dataSource.DeleteVehicle(id);
+            return Ok();
+        }
+
         public IHttpActionResult Users()
         {
             throw new NotImplementedException();

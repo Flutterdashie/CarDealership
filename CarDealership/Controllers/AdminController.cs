@@ -6,21 +6,27 @@ using System.Net.Http;
 using System.Web.Http;
 using CarDealership.Models;
 using CarDealership.Models.ServiceModels;
+using Newtonsoft.Json.Linq;
 
 namespace CarDealership.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class AdminController : ApiController
     {
-        static DataServices _dataSource = new DataServices();
-        public IHttpActionResult Vehicles()
+        private static DataServices _dataSource = new DataServices();
+
+        [Route("Admin/Vehicles")]
+        [HttpPost]
+        public IHttpActionResult Vehicles([FromBody] CarSearchFilters filters)
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetVehicles(filters, RoleType.Admin));
         }
 
-        public IHttpActionResult AddVehicle()
+        [Route("Admin/AddVehicle")]
+        [HttpPost]
+        public IHttpActionResult AddVehicle([FromBody] JObject newVehicle)
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.AddVehicle(newVehicle));
         }
 
         public IHttpActionResult EditVehicle()
@@ -56,14 +62,6 @@ namespace CarDealership.Controllers
         public IHttpActionResult Specials()
         {
             throw new NotImplementedException();
-        }
-
-        [Route("Admin/TestView")]
-        [HttpGet]
-        public IHttpActionResult TestView([FromBody] CarSearchFilters filters)
-        {
-
-            return Ok(_dataSource.GetCars(filters, RoleType.Admin));
         }
     }
 }

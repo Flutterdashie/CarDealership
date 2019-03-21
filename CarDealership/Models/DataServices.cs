@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using CarDealership.Models.DataModels;
 using CarDealership.Models.Repositories;
@@ -12,7 +13,7 @@ namespace CarDealership.Models
     public class DataServices
     {
         private static DataHandlerEF _repo = new DataHandlerEF(); //TODO: Setup interface and factory
-        public IEnumerable<JObject> GetCars(CarSearchFilters filters, RoleType role)
+        public IEnumerable<JObject> GetVehicles(CarSearchFilters filters, RoleType role)
         {
             int maxYear = filters.MaxYear ?? 3000;
             int minYear = filters.MinYear ?? 0;
@@ -29,6 +30,12 @@ namespace CarDealership.Models
             }
             yield break;
         }
+
+        public int AddVehicle(JObject input)
+        {
+            return _repo.AddVehicle(FromJSON(input)).CarID;
+        }
+
 
         private static JObject ToJSON(Car input)
         {
@@ -49,5 +56,39 @@ namespace CarDealership.Models
             };
         }
 
+        private static Car FromJSON(JObject input)
+        {
+            Car car = new Car
+            {
+                CarID = (int) input["ID"],
+                VIN = input["VIN"].ToString(),
+                CarYear = (int) input["Year"],
+                BodyStyle = input["Body"].ToString(),
+                Transmission = input["Transmission"].ToString(),
+                Color = input["Color"].ToString(),
+                Interior = input["Interior"].ToString(),
+                Mileage = (int) input["Mileage"],
+                IsNew = (int) input["Mileage"] < 1000,
+                IsFeatured = false,
+                MakeID = (int) input["MakeID"],
+                ModelID = (int) input["ModelID"],
+                SalePrice = decimal.Parse(input["SalePrice"].ToString()),
+                MSRP = decimal.Parse(input["MSRP"].ToString()),
+                CarDescription = input["Description"].ToString()
+            };
+            car.Model = GetModel(car.ModelID);
+            car.Make = GetMake(car.MakeID);
+            return car;
+        }
+
+        private static Model GetModel(int modelID)
+        {
+            return _repo.GetModels().FirstOrDefault(m => m.ModelID == modelID);
+        }
+
+        private static Make GetMake(int makeID)
+        {
+            return _repo.GetMakes().FirstOrDefault(m => m.MakeID == makeID);
+        }
     }
 }

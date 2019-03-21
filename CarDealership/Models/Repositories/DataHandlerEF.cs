@@ -21,5 +21,22 @@ namespace CarDealership.Models.Repositories
                                                  || c.CarYear.ToString().Contains(makeModelYear)));
             return isAdmin ? firstResult : firstResult.OrderByDescending(c => c.MSRP).Take(20);
         }
+
+        public Car AddVehicle(Car newVehicle)
+        {
+            newVehicle = _database.Cars.Add(newVehicle);
+            _database.SaveChanges();
+            return newVehicle;
+        }
+
+        public IEnumerable<Make> GetMakes()
+        {
+            return _database.Makes;
+        }
+
+        public IEnumerable<Model> GetModels()
+        {
+            return _database.Models;
+        }
     }
 }

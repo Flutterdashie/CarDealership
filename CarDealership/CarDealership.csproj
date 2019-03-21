@@ -176,6 +176,7 @@
     <Compile Include="Models\DataModels\Special.cs">
       <DependentUpon>CarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repositories\ICarRepository.cs" />
     <Compile Include="Models\Security\AppRole.cs" />
     <Compile Include="Models\Security\AppUser.cs" />
     <Compile Include="Models\Security\LoginAttempt.cs" />

@@ -177,9 +177,6 @@
     <Compile Include="Models\DataModels\Special.cs">
       <DependentUpon>CarModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Repositories\IAdminRepository.cs" />
-    <Compile Include="Models\Repositories\IInventoryRepository.cs" />
-    <Compile Include="Models\Repositories\ISalesRepository.cs" />
     <Compile Include="Models\Security\AppRole.cs" />
     <Compile Include="Models\Security\AppUser.cs" />
     <Compile Include="Models\Security\LoginAttempt.cs" />
@@ -205,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903201416351_init.resx">

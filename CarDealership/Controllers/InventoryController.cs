@@ -38,9 +38,9 @@ namespace CarDealership.Controllers
             {
                 return Ok(_dataSource.GetVehicleByID(id));
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
     }

@@ -16,11 +16,11 @@ namespace CarDealership.Models
 
         public IEnumerable<JObject> GetVehicles(CarSearchFilters filters, RoleType role, bool isNew = false)
         {
-            int maxYear = filters.MaxYear ?? 3000;
-            int minYear = filters.MinYear ?? 0;
-            decimal minPrice = filters.MinPrice ?? 0.0m;
-            decimal maxPrice = filters.MaxPrice ?? 100000000.0m;
-            string makeModelYear = filters.MakeModelYear ?? string.Empty;
+            int maxYear = filters?.MaxYear ?? 3000;
+            int minYear = filters?.MinYear ?? 0;
+            decimal minPrice = filters?.MinPrice ?? 0.0m;
+            decimal maxPrice = filters?.MaxPrice ?? 100000000.0m;
+            string makeModelYear = filters?.MakeModelYear ?? string.Empty;
 
             IEnumerable<Car> resultCars = _repo.SearchCars(role == RoleType.Admin, role == RoleType.Sales,
                 isNew, minYear, maxYear, minPrice, maxPrice,

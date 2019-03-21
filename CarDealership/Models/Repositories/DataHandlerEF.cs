@@ -46,27 +46,30 @@ namespace CarDealership.Models.Repositories
                 conn.Open();
                 using (SqlDataReader input = cmd.ExecuteReader())
                 {
-                    Car car = new Car
+                    while (true)
                     {
-                        CarID = (int)input["CarID"],
-                        VIN = input["VIN"].ToString(),
-                        BodyStyle = input["BodyStyle"].ToString(),
-                        Transmission = input["Transmission"].ToString(),
-                        Interior = input["Interior"].ToString(),
-                        MSRP = decimal.Parse(input["MSRP"].ToString()),
-                        SalePrice = decimal.Parse(input["SalePrice"].ToString()),
-                        Mileage = (int)input["Mileage"],
-                        Color = input["Color"].ToString(),
-                        CarYear = (int)input["Year"],
-                        MakeID = (int)input["MakeID"],
-                        ModelID = (int)input["ModelID"],
-                        CarDescription = input["Description"].ToString(),
-                        IsNew = (int)input["Mileage"] < 1000,
-                        IsFeatured = false
-                    };
-                    car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
-                    car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);
-                    return car;
+                        Car car = new Car
+                        {
+                            CarID = (int) input["CarID"],
+                            VIN = input["VIN"].ToString(),
+                            BodyStyle = input["BodyStyle"].ToString(),
+                            Transmission = input["Transmission"].ToString(),
+                            Interior = input["Interior"].ToString(),
+                            MSRP = decimal.Parse(input["MSRP"].ToString()),
+                            SalePrice = decimal.Parse(input["SalePrice"].ToString()),
+                            Mileage = (int) input["Mileage"],
+                            Color = input["Color"].ToString(),
+                            CarYear = (int) input["Year"],
+                            MakeID = (int) input["MakeID"],
+                            ModelID = (int) input["ModelID"],
+                            CarDescription = input["Description"].ToString(),
+                            IsNew = (int) input["Mileage"] < 1000,
+                            IsFeatured = false
+                        };
+                        car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
+                        car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);
+                        return car;
+                    }
                 }
             }
         }

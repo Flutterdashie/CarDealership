@@ -4,12 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using CarDealership.Models;
+using CarDealership.Models.ServiceModels;
 
 namespace CarDealership.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class AdminController : ApiController
     {
+        static DataServices _dataSource = new DataServices();
         public IHttpActionResult Vehicles()
         {
             throw new NotImplementedException();
@@ -55,5 +58,12 @@ namespace CarDealership.Controllers
             throw new NotImplementedException();
         }
 
+        [Route("Admin/TestView")]
+        [HttpGet]
+        public IHttpActionResult TestView([FromBody] CarSearchFilters filters)
+        {
+
+            return Ok(_dataSource.GetCars(filters, RoleType.Admin));
+        }
     }
 }

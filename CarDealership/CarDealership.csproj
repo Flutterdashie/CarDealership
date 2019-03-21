@@ -161,7 +161,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataModels\CarSearchFIiters.cs" />
+    <Compile Include="Models\ServiceModels\CarSearchFIiters.cs" />
     <Compile Include="Models\DataModels\Contact.cs">
       <DependentUpon>CarModel.tt</DependentUpon>
     </Compile>
@@ -177,11 +177,14 @@
     <Compile Include="Models\DataModels\Special.cs">
       <DependentUpon>CarModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataServices.cs" />
+    <Compile Include="Models\Repositories\DataHandlerEF.cs" />
     <Compile Include="Models\Security\AppRole.cs" />
     <Compile Include="Models\Security\AppUser.cs" />
     <Compile Include="Models\Security\LoginAttempt.cs" />
     <Compile Include="Models\Security\PasswordChange.cs" />
     <Compile Include="Models\Security\SecurityDB.cs" />
+    <Compile Include="Models\ServiceModels\RoleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903201416351_init.resx">

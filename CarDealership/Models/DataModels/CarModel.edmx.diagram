@@ -14,6 +14,7 @@
         <AssociationConnector Association="CarDealershipModel.fk_Cars_Makes" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.fk_Cars_Models" ManuallyRouted="false" />
         <AssociationConnector Association="CarDealershipModel.fk_Purchases_Cars" ManuallyRouted="false" />
+        <AssociationConnector Association="CarDealershipModel.fk_Models_Makes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

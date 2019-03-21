@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarDealership.Models.Repositories
 {
-    public interface ICarRepository
+    public interface ISalesRepository
     {
     }
 }

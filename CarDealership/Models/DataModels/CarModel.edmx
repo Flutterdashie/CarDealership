@@ -48,6 +48,7 @@
           </Key>
           <Property Name="ModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModelName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="MakeID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Purchases">
           <Key>
@@ -99,6 +100,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Models_Makes">
+          <End Role="Makes" Type="Self.Makes" Multiplicity="1" />
+          <End Role="Models" Type="Self.Models" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Makes">
+              <PropertyRef Name="MakeID" />
+            </Principal>
+            <Dependent Role="Models">
+              <PropertyRef Name="MakeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Purchases_Cars">
           <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
           <End Role="Purchases" Type="Self.Purchases" Multiplicity="*" />
@@ -125,6 +138,10 @@
           <AssociationSet Name="fk_Cars_Models" Association="Self.fk_Cars_Models">
             <End Role="Models" EntitySet="Models" />
             <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Models_Makes" Association="Self.fk_Models_Makes">
+            <End Role="Makes" EntitySet="Makes" />
+            <End Role="Models" EntitySet="Models" />
           </AssociationSet>
           <AssociationSet Name="fk_Purchases_Cars" Association="Self.fk_Purchases_Cars">
             <End Role="Cars" EntitySet="Cars" />
@@ -165,6 +182,7 @@
           <Property Name="MakeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MakeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_Makes" FromRole="Makes" ToRole="Cars" />
+          <NavigationProperty Name="Models" Relationship="CarDealershipModel.fk_Models_Makes" FromRole="Make" ToRole="Model" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
@@ -173,6 +191,8 @@
           <Property Name="ModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModelName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_Models" FromRole="Models" ToRole="Cars" />
+          <Property Name="MakeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Make" Relationship="CarDealershipModel.fk_Models_Makes" FromRole="Model" ToRole="Make" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -266,7 +286,23 @@
             <End Role="Cars" EntitySet="Cars" />
             <End Role="Purchases" EntitySet="Purchases" />
           </AssociationSet>
+          <AssociationSet Name="fk_Models_Makes" Association="CarDealershipModel.fk_Models_Makes">
+            <End Role="Make" EntitySet="Makes" />
+            <End Role="Model" EntitySet="Models" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="fk_Models_Makes">
+          <End Type="CarDealershipModel.Make" Role="Make" Multiplicity="1" />
+          <End Type="CarDealershipModel.Model" Role="Model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Make">
+              <PropertyRef Name="MakeID" />
+            </Principal>
+            <Dependent Role="Model">
+              <PropertyRef Name="MakeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -305,6 +341,7 @@
           <EntitySetMapping Name="Models">
             <EntityTypeMapping TypeName="CarDealershipModel.Model">
               <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="MakeID" ColumnName="MakeID" />
                 <ScalarProperty Name="ModelID" ColumnName="ModelID" />
                 <ScalarProperty Name="ModelName" ColumnName="ModelName" />
               </MappingFragment>

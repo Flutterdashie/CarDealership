@@ -22,8 +22,10 @@ namespace CarDealership.Models.DataModels
     
         public int ModelID { get; set; }
         public string ModelName { get; set; }
+        public int MakeID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Car> Cars { get; set; }
+        public virtual Make Make { get; set; }
     }
 }

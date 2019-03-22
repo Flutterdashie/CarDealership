@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
+using CarDealership.Models.DataModels;
 using CarDealership.Models.Security;
 using CarDealership.Models.ServiceModels;
 using Microsoft.AspNet.Identity;
@@ -68,13 +71,65 @@ namespace CarDealership.Models.Repositories
 
         public IEnumerable<UserView> GetAllUsers()
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = "Server=localhost;Database=CarDealership;User Id=CarApp;Password=Testing123;";
+                SqlCommand cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "GetUsers"
+                };
+                conn.Open();
+                using (SqlDataReader input = cmd.ExecuteReader())
+                {
+                    while (input.Read())
+                    {
+                        yield return new UserView
+                        {
+                            Email = input["Email"].ToString(),
+                            FirstName = input["FirstName"].ToString(),
+                            LastName = input["LastName"].ToString(),
+                            Role = input["Role"].ToString(),
+                            UserID = input["UserID"].ToString()
+                        };
+                    }
+                }
+
+                yield break;
+            }
         }
 
         public UserView GetUser(string userID)
         {
-            throw new NotImplementedException();
-            
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = new CarDealershipEntities().Database.Connection.ConnectionString;
+                SqlCommand cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "GetUsers"
+                };
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                conn.Open();
+                using (SqlDataReader input = cmd.ExecuteReader())
+                {
+                    while (input.Read())
+                    {
+                        return new UserView
+                        {
+                            Email = input["Email"].ToString(),
+                            FirstName = input["FirstName"].ToString(),
+                            LastName = input["LastName"].ToString(),
+                            Role = input["Role"].ToString(),
+                            UserID = input["UserID"].ToString()
+                        };
+                    }
+                }
+
+                return new UserView();
+            }
         }
     }
 }

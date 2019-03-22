@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -31,11 +33,23 @@ namespace CarDealership.Models.Repositories
             return newVehicle;
         }
 
+        public void EditVehicle(Car editedVehicle)
+        {
+            if(editedVehicle.Make == null || editedVehicle.Model == null)
+            {
+                editedVehicle.Model = _database.Models.FirstOrDefault(m => m.ModelID == editedVehicle.ModelID);
+                editedVehicle.Make = _database.Makes.FirstOrDefault(m => m.MakeID == editedVehicle.MakeID);
+            }
+
+            _database.Cars.AddOrUpdate(editedVehicle);
+            _database.SaveChanges();
+        }
+
         public Car GetVehicleByID(int id)
         {
             using (SqlConnection conn = new SqlConnection())
             {
-                conn.ConnectionString = _database.Database.Connection.ConnectionString;
+                conn.ConnectionString = "Server=localhost;Database=CarDealership;User Id=CarApp;Password=Testing123;";
                 SqlCommand cmd = new SqlCommand
                 {
                     Connection = conn,
@@ -59,15 +73,16 @@ namespace CarDealership.Models.Repositories
                             SalePrice = decimal.Parse(input["SalePrice"].ToString()),
                             Mileage = (int) input["Mileage"],
                             Color = input["Color"].ToString(),
-                            CarYear = (int) input["Year"],
+                            CarYear = (int) input["CarYear"],
                             MakeID = (int) input["MakeID"],
                             ModelID = (int) input["ModelID"],
-                            CarDescription = input["Description"].ToString(),
+                            CarDescription = input["CarDescription"].ToString(),
                             IsNew = (int) input["Mileage"] < 1000,
-                            IsFeatured = false
+                            IsFeatured = (bool) input["IsFeatured"]
                         };
                         car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
                         car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);
+                        conn.Close();
                         return car;
                     }
                 }

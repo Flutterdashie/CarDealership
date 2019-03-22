@@ -29,11 +29,31 @@ namespace CarDealership.Controllers
             return Ok(_dataSource.AddVehicle(newVehicle));
         }
 
-        [Route("Admin/EditVehicle")]
+        [Route("Admin/EditVehicle/{id}")]
         [HttpPost]
-        public IHttpActionResult EditVehicle([FromBody] JObject editedVehicle)
+        public IHttpActionResult EditVehicle(int id,[FromBody] JObject editedVehicle)
         {
-            throw new NotImplementedException();
+            // TODO: See if there's a safer way to include this
+            //if (id != (int) editedVehicle["ID"])
+            //{
+            //    return BadRequest("Path/ID Mismatch");
+            //}
+
+            return _dataSource.EditVehicle(editedVehicle) ? Ok() as IHttpActionResult : BadRequest();
+        }
+
+        [Route("Admin/EditVehicle/{id}")]
+        [HttpGet]
+        public IHttpActionResult EditVehicle(int id)
+        {
+            try
+            {
+                return Ok(_dataSource.GetVehicleByID(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [Route("Admin/DeleteVehicle/{id}")]

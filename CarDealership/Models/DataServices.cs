@@ -13,6 +13,7 @@ namespace CarDealership.Models
     public class DataServices
     {
         private static DataHandlerEF _repo = new DataHandlerEF(); //TODO: Setup interface and factory
+        private static SecurityHandlerProd _secRepo = new SecurityHandlerProd();
 
         public IEnumerable<JObject> GetVehicles(CarSearchFilters filters, RoleType role, bool isNew = false)
         {
@@ -27,27 +28,55 @@ namespace CarDealership.Models
                 makeModelYear);
             foreach (Car resultCar in resultCars)
             {
-                yield return ToJSON(resultCar);
+                yield return CarToJSON(resultCar);
             }
             yield break;
         }
 
         public int AddVehicle(JObject input)
         {
-            return _repo.AddVehicle(FromJSON(input)).CarID;
+            return _repo.AddVehicle(CarFromJSON(input)).CarID;
         }
 
-        public void DeleteVehicle(int id)
+        public bool EditVehicle(JObject input)
         {
-            _repo.DeleteVehicle(id);
+            try
+            {
+                _repo.EditVehicle(CarFromJSON(input));
+                return true;
+            }
+            catch 
+            {
+                //TODO: Make this a TON safer
+                return false;
+            }
+        }
+
+        public int DeleteVehicle(int id)
+        {
+            return _repo.DeleteVehicle(id);
         }
 
         public JObject GetVehicleByID(int id)
         {
-            return ToJSON(_repo.GetVehicleByID(id));
+            return CarToJSON(_repo.GetVehicleByID(id));
         }
 
-        private static JObject ToJSON(Car input)
+        public JObject GetUserByID(string userID)
+        {
+            return UserToJSON(_secRepo.GetUser(userID));
+        }
+
+        public IEnumerable<JObject> GetUsers()
+        {
+            IEnumerable<UserView> users = _secRepo.GetAllUsers();
+            foreach (UserView user in users)
+            {
+                yield return UserToJSON(user);
+            }
+        }
+
+        private static JObject CarToJSON(Car input)
         {
             return new JObject
             {
@@ -62,11 +91,14 @@ namespace CarDealership.Models
                 {"Mileage", input.IsNew ? "New" : $"{input.Mileage:N0}"},
                 {"VIN", input.VIN},
                 {"SalePrice", $"{input.SalePrice:C}"},
-                {"MSRP", $"{input.MSRP:C}"}
+                {"MSRP", $"{input.MSRP:C}"},
+                {"Description",input.CarDescription },
+                {"IsNew",input.IsNew ? 1 : 0 },
+                {"IsFeatured",input.IsFeatured ? 1 :0 }
             };
         }
 
-        private static Car FromJSON(JObject input)
+        private static Car CarFromJSON(JObject input)
         {
             Car car = new Car
             {
@@ -79,7 +111,7 @@ namespace CarDealership.Models
                 Interior = input["Interior"].ToString(),
                 Mileage = (int) input["Mileage"],
                 IsNew = (int) input["Mileage"] < 1000,
-                IsFeatured = false,
+                IsFeatured = ((int?)input?["IsFeatured"] ?? 0) == 1,
                 MakeID = (int) input["MakeID"],
                 ModelID = (int) input["ModelID"],
                 SalePrice = decimal.Parse(input["SalePrice"].ToString()),
@@ -89,6 +121,30 @@ namespace CarDealership.Models
             car.Model = GetModel(car.ModelID);
             car.Make = GetMake(car.MakeID);
             return car;
+        }
+
+        private static JObject UserToJSON(UserView input)
+        {
+            return new JObject
+            {
+                {"Email", input.Email},
+                {"FirstName", input.FirstName},
+                {"LastName", input.LastName},
+                {"Role", input.Role},
+                {"UserID", input.UserID}
+            };
+        }
+
+        private static UserView UserFromJSON(JObject input)
+        {
+            return new UserView
+            {
+                Email = input["Email"].ToString(),
+                FirstName = input["FirstName"].ToString(),
+                LastName = input["LastName"].ToString(),
+                Role = input["Role"].ToString(),
+                UserID = input["UserID"].ToString()
+            };
         }
 
         private static Model GetModel(int modelID)

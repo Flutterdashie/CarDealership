@@ -12,7 +12,7 @@ namespace CarDealership.Api_Controllers
         private static DataServices _dataSource = new DataServices();
 
         [Route("api/Admin/Vehicles")]
-        [HttpPost]
+        [HttpGet]
         public IHttpActionResult Vehicles([FromBody] CarSearchFilters filters)
         {
             return Ok(_dataSource.GetVehicles(filters, RoleType.Admin));
@@ -25,7 +25,7 @@ namespace CarDealership.Api_Controllers
             return Ok(_dataSource.AddVehicle(newVehicle));
         }
 
-        [Route("Admin/EditVehicle/{id}")]
+        [Route("api/Admin/EditVehicle/{id}")]
         [HttpPost]
         public IHttpActionResult EditVehicle(int id,[FromBody] JObject editedVehicle)
         {

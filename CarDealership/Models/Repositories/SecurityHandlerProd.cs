@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace CarDealership.Models.Repositories
 {
+    //Here we go, hybrid time.
     public class SecurityHandlerProd
     {
         public string AddUser(string firstName, string lastName, string email, string role, string password)

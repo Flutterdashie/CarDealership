@@ -46,7 +46,7 @@ namespace CarDealership.Models.Repositories
                 conn.Open();
                 using (SqlDataReader input = cmd.ExecuteReader())
                 {
-                    while (true)
+                    while (input.Read())
                     {
                         Car car = new Car
                         {
@@ -71,6 +71,8 @@ namespace CarDealership.Models.Repositories
                         return car;
                     }
                 }
+
+                return null;
             }
         }
 

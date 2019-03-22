@@ -29,7 +29,9 @@ namespace CarDealership.Controllers
             return Ok(_dataSource.AddVehicle(newVehicle));
         }
 
-        public IHttpActionResult EditVehicle()
+        [Route("Admin/EditVehicle")]
+        [HttpPost]
+        public IHttpActionResult EditVehicle([FromBody] JObject editedVehicle)
         {
             throw new NotImplementedException();
         }

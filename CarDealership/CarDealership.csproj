@@ -161,6 +161,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repositories\SecurityHandlerProd.cs" />
     <Compile Include="Models\ServiceModels\CarSearchFIiters.cs" />
     <Compile Include="Models\DataModels\Contact.cs">
       <DependentUpon>CarModel.tt</DependentUpon>
@@ -185,6 +186,7 @@
     <Compile Include="Models\Security\PasswordChange.cs" />
     <Compile Include="Models\Security\SecurityDB.cs" />
     <Compile Include="Models\ServiceModels\RoleType.cs" />
+    <Compile Include="Models\ServiceModels\UserView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

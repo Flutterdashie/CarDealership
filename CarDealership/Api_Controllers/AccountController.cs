@@ -1,20 +1,15 @@
-﻿using CarDealership.Models.Security;
+﻿using System.Web;
+using System.Web.Http;
+using CarDealership.Models.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http;
 
-namespace CarDealership.Controllers
+namespace CarDealership.Api_Controllers
 {
     public class AccountController : ApiController
     {
-        [Route("Account/Login")]
+        [Route("api/Account/Login")]
         [HttpPost]
         [AllowAnonymous]
         public IHttpActionResult Login([FromBody] LoginAttempt model)
@@ -43,7 +38,7 @@ namespace CarDealership.Controllers
             }
         }
 
-        [Route("Account/ChangePassword")]
+        [Route("api/Account/ChangePassword")]
         [HttpPost]
         [Authorize(Roles ="Admin,Sales")]
         public IHttpActionResult ChangePassword([FromBody] PasswordChange request)
@@ -61,7 +56,7 @@ namespace CarDealership.Controllers
             }
         }
 
-        [Route("Account/GetUsername")]
+        [Route("api/Account/GetUsername")]
         [HttpGet]
         [Authorize]
         public IHttpActionResult GetUsername()

@@ -2,7 +2,7 @@
 using System.Web.Http;
 using CarDealership.Models.DataModels;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Api_Controllers
 {
     [AllowAnonymous]
     public class HomeController : ApiController

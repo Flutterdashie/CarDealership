@@ -3,7 +3,7 @@ using System.Web.Http;
 using CarDealership.Models;
 using CarDealership.Models.ServiceModels;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Api_Controllers
 {
     [AllowAnonymous]
     public class InventoryController : ApiController
@@ -12,7 +12,7 @@ namespace CarDealership.Api_Controllers.Controllers
 
         [HttpGet]
         [HttpPost]
-        [Route("Inventory/New")]
+        [Route("api/Inventory/New")]
         public IHttpActionResult New([FromBody] CarSearchFilters filters)
         {
             return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff, true));
@@ -20,14 +20,14 @@ namespace CarDealership.Api_Controllers.Controllers
 
         [HttpGet]
         [HttpPost]
-        [Route("Inventory/Used")]
+        [Route("api/Inventory/Used")]
         public IHttpActionResult Used([FromBody] CarSearchFilters filters)
         {
             return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff));
         }
 
         [HttpGet]
-        [Route("Inventory/Details/{id}")]
+        [Route("api/Inventory/Details/{id}")]
         public IHttpActionResult Details(int id)
         {
             try

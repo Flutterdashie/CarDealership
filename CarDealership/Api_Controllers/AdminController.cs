@@ -4,21 +4,21 @@ using CarDealership.Models;
 using CarDealership.Models.ServiceModels;
 using Newtonsoft.Json.Linq;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Api_Controllers
 {
     [Authorize(Roles ="Admin")]
     public class AdminController : ApiController
     {
         private static DataServices _dataSource = new DataServices();
 
-        [Route("Admin/Vehicles")]
+        [Route("api/Admin/Vehicles")]
         [HttpPost]
         public IHttpActionResult Vehicles([FromBody] CarSearchFilters filters)
         {
             return Ok(_dataSource.GetVehicles(filters, RoleType.Admin));
         }
 
-        [Route("Admin/AddVehicle")]
+        [Route("api/Admin/AddVehicle")]
         [HttpPost]
         public IHttpActionResult AddVehicle([FromBody] JObject newVehicle)
         {
@@ -38,7 +38,7 @@ namespace CarDealership.Api_Controllers.Controllers
             return _dataSource.EditVehicle(editedVehicle) ? Ok() as IHttpActionResult : BadRequest();
         }
 
-        [Route("Admin/EditVehicle/{id}")]
+        [Route("api/Admin/EditVehicle/{id}")]
         [HttpGet]
         public IHttpActionResult EditVehicle(int id)
         {
@@ -52,7 +52,7 @@ namespace CarDealership.Api_Controllers.Controllers
             }
         }
 
-        [Route("Admin/DeleteVehicle/{id}")]
+        [Route("api/Admin/DeleteVehicle/{id}")]
         [HttpDelete]
         public IHttpActionResult DeleteVehicle(int id)
         {

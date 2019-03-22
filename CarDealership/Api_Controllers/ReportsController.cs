@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Api_Controllers
 {
     [Authorize(Roles ="Admin")]
     public class ReportsController : ApiController

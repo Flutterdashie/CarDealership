@@ -15,6 +15,7 @@ namespace CarDealership.Api_Controllers
         [Route("api/Inventory/New")]
         public IHttpActionResult New([FromBody] CarSearchFilters filters)
         {
+            //var test = Request.Content;
             return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff, true));
         }
 

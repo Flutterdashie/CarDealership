@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New</h2>
+<form id="searchForm" class="form-inline">
+    <input type="hidden" value="@ViewBag.Title.ToString()" id="searchType" />
+    <div class="form-group">
+        <input type="text" id="makeModelYear" placeholder="Make, Model, or Year" name="makeModelYear" />
+    </div>
+    <div class="form-group">
+        <input type="number" placeholder="Min Year" id="minYear" />
+        <input type="number" placeholder="Max Year" id="maxYear" />
+    </div>
+    <div class="form-group">
+        <input type="text" placeholder="Min Price" id="minPrice" />
+        <input type="text" placeholder="Max Price" id="maxPrice" />
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+<div class="alert alert-danger hidden" role="alert" id="errorMessages">
+    Validation Messages here
+</div>
+
+<div id="vehicleList">a</div>
+
+
+
+@section scripts {
+<script src="~/Scripts/SearchHandler.js"></script>
+}

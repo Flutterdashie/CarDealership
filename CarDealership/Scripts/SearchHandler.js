@@ -43,7 +43,7 @@ $('#searchForm').on('submit',
             },
             'dataType': 'json',
             success: function (data, status) {
-                $('#vehicleList').text('b');
+                $('#vehicleList').text('');
                 $.each(data, function (index, item) {
                     var detailsLink = '<button class="btn btn-primary" onclick="Activate(';
                     detailsLink += item.ID + ')">' + buttonLabel + '</button>';

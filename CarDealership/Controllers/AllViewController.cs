@@ -27,6 +27,7 @@ namespace CarDealership.Controllers
         public ActionResult Used()
         {
             //TODO: AJAX
+            return View();
             throw new NotImplementedException();
         }
 

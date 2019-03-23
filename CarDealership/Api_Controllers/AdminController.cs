@@ -13,6 +13,7 @@ namespace CarDealership.Api_Controllers
 
         [Route("api/Admin/Vehicles")]
         [HttpGet]
+        [HttpPost]
         public IHttpActionResult Vehicles([FromBody] CarSearchFilters filters)
         {
             return Ok(_dataSource.GetVehicles(filters, RoleType.Admin));

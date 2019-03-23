@@ -120,6 +120,7 @@ namespace CarDealership.Controllers
         [Route("Account/ChangePassword")]
         public ActionResult ChangePassword()
         {
+            return View();
             throw new NotImplementedException();
         }
 

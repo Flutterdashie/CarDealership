@@ -63,7 +63,7 @@ namespace CarDealership.Api_Controllers
 
         public IHttpActionResult Users()
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetUsers());
         }
 
         public IHttpActionResult AddUser()

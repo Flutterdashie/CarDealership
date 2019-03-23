@@ -43,6 +43,11 @@ namespace CarDealership.Api_Controllers
         [Authorize(Roles ="Admin,Sales")]
         public IHttpActionResult ChangePassword([FromBody] PasswordChange request)
         {
+            if (request.NewPassword != request.ConfirmNewPassword)
+            {
+                return BadRequest("Confirm Password Mismatch");
+            }
+
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<UserManager<AppUser>>();
             var authManager = HttpContext.Current.GetOwinContext().Authentication;
             var result = userManager.ChangePassword(authManager.User.Identity.GetUserId(), request.OldPassword, request.NewPassword);

@@ -9,12 +9,14 @@ namespace CarDealership.Controllers
     public class AllViewController : Controller
     {
         // GET: AllView
+        [AllowAnonymous]
         [Route("Home/Index")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [Route("Inventory/New")]
         public ActionResult New()
         {
@@ -23,6 +25,7 @@ namespace CarDealership.Controllers
             throw new NotImplementedException();
         }
 
+        [AllowAnonymous]
         [Route("Inventory/Used")]
         public ActionResult Used()
         {
@@ -31,18 +34,21 @@ namespace CarDealership.Controllers
             throw new NotImplementedException();
         }
 
+        [AllowAnonymous]
         [Route("Inventory/Details/{id}")]
         public ActionResult Details(int id)
         {
             throw new NotImplementedException();
         }
 
+        [AllowAnonymous]
         [Route("Home/Specials")]
         public ActionResult Specials()
         {
             throw new NotImplementedException();
         }
 
+        [AllowAnonymous]
         [Route("Home/Contact")]
         public ActionResult Contact()
         {
@@ -69,6 +75,7 @@ namespace CarDealership.Controllers
         public ActionResult Vehicles()
         {
             //TODO: AJAX for full results
+            return View();
             throw new NotImplementedException();
         }
 
@@ -162,6 +169,7 @@ namespace CarDealership.Controllers
         [Route("Account/Login")]
         public ActionResult Login()
         {
+            return View();
             throw new NotImplementedException();
         }
 

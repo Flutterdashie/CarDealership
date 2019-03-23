@@ -259,6 +259,8 @@
     <Content Include="Views\AllView\Index.cshtml" />
     <Content Include="Views\AllView\New.cshtml" />
     <Content Include="Views\AllView\Used.cshtml" />
+    <Content Include="Views\AllView\Vehicles.cshtml" />
+    <Content Include="Views\AllView\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

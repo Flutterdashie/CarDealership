@@ -41,7 +41,8 @@ namespace CarDealership.Migrations
             // create the default user
             var user = new AppUser()
             {
-                UserName = "admin"
+                UserName = "admin",
+                Email = "admin@admin.yes"
             };
 
             // create the user with the manager class

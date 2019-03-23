@@ -10,7 +10,8 @@ $('#searchForm').on('submit',
         var urlString = 'http://localhost:55792/api/';
         var buttonLabel = '';
         switch ($('#searchType').val()) {
-        case 'Admin':
+        //These are all based on page title
+        case 'Vehicles':
                 urlString += 'Admin/Vehicles';
                 buttonLabel = 'Edit';
                 break;

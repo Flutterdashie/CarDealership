@@ -7,7 +7,7 @@ namespace CarDealership.Models.Security
 {
     public class LoginAttempt
     {
-        public string UserName { get; set; }
+        public string UserName { get; set; } //Secretly this is usually their email
         public string Password { get; set; }
     }
 }

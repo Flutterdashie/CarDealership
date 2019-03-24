@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using CarDealership.Models;
 using CarDealership.Models.DataModels;
 
 namespace CarDealership.Api_Controllers
@@ -7,19 +8,23 @@ namespace CarDealership.Api_Controllers
     [AllowAnonymous]
     public class HomeController : ApiController
     {
+        private static DataServices _dataSource = new DataServices();
+
+
         public IHttpActionResult Index()
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
+        [Route("api/Home/Specials")]
         public IHttpActionResult Specials()
         {
-            //TODO: Create JSON Array of specials
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetSpecials());
         }
 
         [HttpPost]
+        [Route("api/Home/Contact")]
         public IHttpActionResult Contact([FromBody] Contact newContact)
         {
             if(newContact == null)

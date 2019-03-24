@@ -145,13 +145,13 @@ namespace CarDealership.Controllers
         public ActionResult Models()
         {
             return View();
-            throw new NotImplementedException();
         }
 
         [Authorize(Roles = "Admin")]
         [Route("Admin/Specials")]
         public ActionResult AdminSpecials()
         {
+            return View();
             throw new NotImplementedException();
         }
 

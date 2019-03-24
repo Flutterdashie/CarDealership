@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "AdminSpecials";
+}
+
+<h2>AdminSpecials</h2>
+
+<div class="row">
+    <form id="addSpecial">
+        <div class="form-group">
+            <label for="newTitle">Title: </label>
+            <input type="text" name="newTitle" id="newTitle" placeholder="Title"/>
+        </div>
+        <div class="form-group">
+            <label for="newDescription">Description: </label>
+            <textarea name="newDescription" id="newDescription" placeholder="Description"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</div>
+<div id="specialList"></div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function RepopulateList() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/specials/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#specialList').empty();
+                    $.each(data,
+                        function (index, item) {
+                            var row = '<div class="row"><div class="col-1"><h1>$</h1></div><div class="col-10"><h3>' + item.Title + '</h3><br/>';
+                            row += '<p>' + item.Description + '</p></div><div class="col-1"><button type="button" class="btn btn-danger" onclick="DeleteSpecial(';
+                            row += item.SpecialID + ')">Delete</button></div></div>';
+                            $('#specialList').append(row);
+                        });
+                },
+                error: function (jqXHR) {
+                    alert('the get broke and said: ' + jqXHR.responseText);
+                }
+            });
+        }
+        function DeleteSpecial(id) {
+            $.ajax({
+                type: 'DELETE',
+                url: 'http://localhost:55792/api/admin/specials/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                'dataType': 'json',
+                data: JSON.stringify({
+                    SpecialID: id
+                }),
+                success: function () {
+                    RepopulateList();
+                },
+                error: function (jqXHR) {
+                    alert('the delete broke and said: ' + jqXHR.responseText);
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            RepopulateList();
+
+
+            $('#addSpecial').on('submit',
+                function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:55792/api/admin/specials/',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        data: JSON.stringify({
+                            Title: $('#newTitle').val(),
+                            Description: $('#newDescription').val()
+                        }),
+                        success: function () {
+                            RepopulateList();
+                        },
+                        error: function (jqXHR) {
+                            alert('the post broke and said: ' + jqXHR.responseText);
+                            RepopulateList();
+                        }
+                    });
+                });
+        })
+    </script>
+
+}

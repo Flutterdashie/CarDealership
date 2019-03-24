@@ -1,7 +1,25 @@
 ﻿
 @{
-    ViewBag.Title = "AddUser";
+    ViewBag.Title = "Add User";
 }
 
 <h2>AddUser</h2>
+<form action="/api/Admin/Users" method="post">
+    Email:
+    <input type="email" name="Email" required/>
+    First Name:
+    <input type="text" name="FirstName" required/>
+    Last Name:
+    <input type="text" name="LastName" required/>
+    Role:
+    <select name="Role" required>
+        <option value="Admin">Admin</option>
+        <option value="Sales">Sales</option>
+        <option value="Disabled">Disabled</option>
+    </select>
+    Password:
+    <input type="password" name="Password" required/>
+    <button type="submit">Add User</button>
+    This doesn't actually work yet.
+</form>
 

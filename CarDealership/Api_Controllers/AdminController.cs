@@ -79,6 +79,7 @@ namespace CarDealership.Api_Controllers
         [Route("api/Admin/Users")]
         public IHttpActionResult AddUser([FromBody] JObject newUser)
         {
+            newUser.Add("UserID","Placeholder");
             string response = _dataSource.AddUser(newUser);
             return (!response.Contains(" ")) ? Ok(response) as IHttpActionResult : BadRequest(response);
         }
@@ -98,16 +99,19 @@ namespace CarDealership.Api_Controllers
             }
         }
 
+        [Route("api/Admin/Makes")]
         public IHttpActionResult Makes()
         {
             throw new NotImplementedException();
         }
 
+        [Route("api/Admin/Models")]
         public IHttpActionResult Models()
         {
             throw new NotImplementedException();
         }
 
+        [Route("api/Admin/Specials")]
         public IHttpActionResult Specials()
         {
             throw new NotImplementedException();

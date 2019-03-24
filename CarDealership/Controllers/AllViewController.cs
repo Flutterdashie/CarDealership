@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 using CarDealership.Models;
 using CarDealership.Models.ServiceModels;
+using CarDealership.Models.ViewModels;
 
 namespace CarDealership.Controllers
 {
@@ -14,15 +14,15 @@ namespace CarDealership.Controllers
         private static DataServices _apiSkipper = new DataServices();
         // TODO: Rewrite everything that uses _apiSkipper
         
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Home/Index")]
+        [AllowAnonymous]
+        [Route("Home/Index")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Inventory/New")]
+        [AllowAnonymous]
+        [Route("Inventory/New")]
         public ActionResult New()
         {
             //Hooray, this one is working and uses ajax!
@@ -30,77 +30,79 @@ namespace CarDealership.Controllers
 
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Inventory/Used")]
+        [AllowAnonymous]
+        [Route("Inventory/Used")]
         public ActionResult Used()
         {
             //Hooray, this one is working and uses ajax!
             return View();
-            throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Inventory/Details/{id}")]
+        [AllowAnonymous]
+        [Route("Inventory/Details/{id}")]
         public ActionResult Details(int id)
         {
+            //TODO: Make this not cheat
+            ViewBag.CarID = id;
+            return View();
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Home/Specials")]
+        [AllowAnonymous]
+        [Route("Home/Specials")]
         public ActionResult Specials()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Home/Contact")]
+        [AllowAnonymous]
+        [Route("Home/Contact")]
         public ActionResult Contact()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Sales")]
-        [System.Web.Mvc.Route("Sales/Index")]
+        [Authorize(Roles = "Sales")]
+        [Route("Sales/Index")]
         public ActionResult SalesIndex()
         {
             //TODO: AJAX
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Sales")]
-        [System.Web.Mvc.Route("Sales/Purchase/{id}")]
+        [Authorize(Roles = "Sales")]
+        [Route("Sales/Purchase/{id}")]
         public ActionResult Purchase(int id)
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/Vehicles")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/Vehicles")]
         public ActionResult Vehicles()
         {
             //Hooray, this one is working and uses ajax!
             return View();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/AddVehicle")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/AddVehicle")]
         public ActionResult AddVehicle()
         {
             //TODO: AJAX for models/makes
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/EditVehicle/{id}")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/EditVehicle/{id}")]
         public ActionResult EditVehicle(int id)
         {
             //TODO: AJAX for models/makes
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/Users")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/Users")]
         public ActionResult Users()
         {
             //TODO: Make this NOT circumvent the api
@@ -108,73 +110,73 @@ namespace CarDealership.Controllers
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/AddUser")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/AddUser")]
         public ActionResult AddUser()
         {
+            //TODO: Fix this.
             return View();
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/EditUser")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/EditUser")]
         public ActionResult EditUser(UserView model)
         {
             return View(model);
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin,Sales")]
-        [System.Web.Mvc.Route("Account/ChangePassword")]
+        [Authorize(Roles = "Admin,Sales")]
+        [Route("Account/ChangePassword")]
         public ActionResult ChangePassword()
         {
             return View();
-            throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/Makes")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/Makes")]
         public ActionResult Makes()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/Models")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/Models")]
         public ActionResult Models()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Admin/Specials")]
+        [Authorize(Roles = "Admin")]
+        [Route("Admin/Specials")]
         public ActionResult AdminSpecials()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Reports/Index")]
+        [Authorize(Roles = "Admin")]
+        [Route("Reports/Index")]
         public ActionResult ReportsIndex()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Reports/Sales")]
+        [Authorize(Roles = "Admin")]
+        [Route("Reports/Sales")]
         public ActionResult ReportsSales()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Admin")]
-        [System.Web.Mvc.Route("Reports/Inventory")]
+        [Authorize(Roles = "Admin")]
+        [Route("Reports/Inventory")]
         public ActionResult Inventory()
         {
             throw new NotImplementedException();
         }
 
-        [System.Web.Mvc.AllowAnonymous]
-        [System.Web.Mvc.Route("Account/Login")]
+        [AllowAnonymous]
+        [Route("Account/Login")]
         public ActionResult Login()
         {
             return View();

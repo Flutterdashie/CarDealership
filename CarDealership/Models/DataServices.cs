@@ -116,7 +116,8 @@ namespace CarDealership.Models
                 {"MSRP", $"{input.MSRP:C}"},
                 {"Description",input.CarDescription },
                 {"IsNew",input.IsNew ? 1 : 0 },
-                {"IsFeatured",input.IsFeatured ? 1 :0 }
+                {"IsFeatured",input.IsFeatured ? 1 :0 },
+                {"IsPurchased",input.Purchases.Any()? 1 : 0}
             };
         }
 

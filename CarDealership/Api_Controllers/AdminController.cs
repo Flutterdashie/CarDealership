@@ -121,10 +121,27 @@ namespace CarDealership.Api_Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpGet]
         [Route("api/Admin/Models")]
         public IHttpActionResult Models()
         {
+            return Ok(_dataSource.GetModels());
             throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [Route("api/Admin/Models")]
+        public IHttpActionResult AddModel([FromBody] JObject newModel)
+        {
+            try
+            {
+                return Ok(_dataSource.AddModel(newModel));
+            }
+            catch
+            {
+                return BadRequest("Nope, they can't come out with new cars anymore. Sorry.");
+            }
         }
 
         [Route("api/Admin/Specials")]

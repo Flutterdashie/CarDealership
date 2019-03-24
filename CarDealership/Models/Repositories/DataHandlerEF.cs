@@ -54,6 +54,16 @@ namespace CarDealership.Models.Repositories
             return output;
         }
 
+        public Model AddModel(string modelName, int makeID)
+        {
+            Model newModel = _database.Models.Create();
+            newModel.ModelName = modelName;
+            newModel.MakeID = makeID;
+            Model output = _database.Models.Add(newModel);
+            _database.SaveChanges();
+            return output;
+        }
+
         public Car GetVehicleByID(int id)
         {
             using (SqlConnection conn = new SqlConnection())

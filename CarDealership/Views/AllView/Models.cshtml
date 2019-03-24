@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Models";
+}
+
+<h2>Models</h2>
+<form id="addModel" class="form-horizontal">
+    <div class="form-group">
+        <label for="newModel">New Model: </label>
+        <input type="text" name="newModel" id="newModel" />
+    </div>
+    <div class="form-group">
+        <label for="makePicker">Make: </label>
+        <select name="makePicker" id="makePicker"></select>
+    </div>
+    <div class="form-group"><button class="btn btn-primary" id="submitBtn" type="submit">Save</button></div>
+</form>
+
+
+<table class="table-striped">
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+        </tr>
+    </thead>
+    <tbody id="modelList"></tbody>
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function RepopulateList() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/models/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#modelList').empty();
+                    $.each(data,
+                        function (index, item) {
+                            var row = '<tr><td>' + item.MakeName + '</td><td>' + item.ModelName + '</td></tr>';
+                            $('#modelList').append(row);
+                        });
+                },
+                error: function (jqXHR) {
+                    alert('the get for models broke and said: ' + jqXHR.responseText);
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //RepopulateList(); this was a whole host of trouble, async being what it is, it was trying to request two things at once and my server was NOT happy.
+
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/makes/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data) {
+                    $('#makePicker').empty();
+                    $.each(data,
+                        function(index, item) {
+                            var row = '<option value="' + item.MakeID + '">' + item.MakeName + '</option>';
+                            $('#makePicker').append(row);
+                        });
+                    RepopulateList();
+                },
+                error: function (jqXHR) {
+                    alert('the get for makes broke and said: ' + jqXHR.responseText);
+                    $('#submitBtn').attr('disabled', true);
+                }
+
+            });
+
+            $('#addModel').on('submit',
+                function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:55792/api/admin/models/',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        data: JSON.stringify({
+                            ModelName: $('#newModel').val(),
+                            MakeID: $('#makePicker').val()
+                        }),
+                        success: function () {
+                            RepopulateList();
+                        },
+                        error: function (jqXHR) {
+                            alert('the post broke and said: ' + jqXHR.responseText);
+                            RepopulateList();
+                        }
+                    });
+                });
+        })
+    </script>
+}

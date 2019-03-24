@@ -100,7 +100,7 @@ namespace CarDealership.Models
         public IEnumerable<JObject> GetMakes()
         {
             //I almost forgot that linq could do this. Yay!
-            return _repo.GetMakes().Select(make => new JObject
+            return _repo.GetMakes().OrderBy(m => m.MakeID).Select(make => new JObject
             {
                 {"MakeID", make.MakeID},
                 {"MakeName", make.MakeName}
@@ -110,6 +110,23 @@ namespace CarDealership.Models
         public int AddMake(JObject newMake)
         {
             return _repo.AddMake(newMake["MakeName"].ToString()).MakeID;
+        }
+
+        public IEnumerable<JObject> GetModels()
+        {
+            //hopefully this works
+            return _repo.GetModels().OrderBy(m => m.MakeID).Select(model => new JObject
+            {
+                {"ModelID",model.ModelID},
+                {"ModelName",model.ModelName},
+                {"MakeID",model.MakeID},
+                {"MakeName",model.Make.MakeName}
+            });
+        }
+
+        public int AddModel(JObject newModel)
+        {
+            return _repo.AddModel(newModel["ModelName"].ToString(), (int) newModel["MakeID"]).ModelID;
         }
 
         private static JObject CarToJSON(Car input)

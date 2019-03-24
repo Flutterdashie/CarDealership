@@ -144,6 +144,7 @@ namespace CarDealership.Controllers
         [Route("Admin/Models")]
         public ActionResult Models()
         {
+            return View();
             throw new NotImplementedException();
         }
 

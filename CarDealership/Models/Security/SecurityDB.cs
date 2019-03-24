@@ -16,5 +16,7 @@ namespace CarDealership.Models.Security
         {
             return new SecurityDB();
         }
+
+        public System.Data.Entity.DbSet<CarDealership.Models.Security.AppUser> AppUsers { get; set; }
     }
 }

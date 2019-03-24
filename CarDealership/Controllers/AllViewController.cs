@@ -112,6 +112,7 @@ namespace CarDealership.Controllers
         [System.Web.Mvc.Route("Admin/AddUser")]
         public ActionResult AddUser()
         {
+            return View();
             throw new NotImplementedException();
         }
 

@@ -264,6 +264,7 @@
     <Content Include="Views\AllView\ChangePassword.cshtml" />
     <Content Include="Views\AllView\Users.cshtml" />
     <Content Include="Views\AllView\EditUser.cshtml" />
+    <Content Include="Views\AllView\AddUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

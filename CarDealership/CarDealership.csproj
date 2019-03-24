@@ -262,6 +262,8 @@
     <Content Include="Views\AllView\Vehicles.cshtml" />
     <Content Include="Views\AllView\Login.cshtml" />
     <Content Include="Views\AllView\ChangePassword.cshtml" />
+    <Content Include="Views\AllView\Users.cshtml" />
+    <Content Include="Views\AllView\EditUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

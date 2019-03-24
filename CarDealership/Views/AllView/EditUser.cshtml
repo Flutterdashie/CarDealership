@@ -1,0 +1,85 @@
+﻿@model CarDealership.Models.ServiceModels.UserView
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+<h2>Edit User</h2>
+
+<form id="editUserForm" class="panel">
+    <input class="panel-heading" type="text" name="UserID" value="@Model.UserID" disabled/>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <input type="text" name="FirstName" id="FirstName" />
+        </div>
+        <div class="form-group">
+            <input type="text" name="LastName" id="LastName" />
+        </div>
+        <div class="form-group">
+            <input type="text" name="Email" id="Email" />
+        </div>
+        <div class="form-group">
+            <select type="text" name="Role" id="Role">
+                <option value="Admin">Admin</option>
+                <option value="Sales">Sales</option>
+                <option value="Disabled">Disabled</option>
+            </select>
+        </div>
+        <button type="submit">Submit Edits</button>
+    </div>
+</form>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/users/' + '@Model.UserID',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#FirstName').val(data.FirstName);
+                    $('#LastName').val(data.LastName);
+                    $('#Email').val(data.Email);
+                    $('#Role').val(data.Role);
+                },
+                error: function (jqXHR) {
+                    alert(jqXHR.responseText);
+                }
+            });
+
+
+            $('#editUserForm').on('submit',
+                function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'http://localhost:55792/api/admin/users/',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        data: JSON.stringify({
+                            FirstName: $('#FirstName').val(),
+                            LastName: $('#LastName').val(),
+                            Email: $('#Email').val(),
+                            Role: $('#Role').val(),
+                            UserID: $('#UserID').val()
+                        }),
+                        success: function() {
+                            alert('Edit succeeded');
+                        },
+                        error: function(jqXHR) {
+                            alert(jqXHR.responseText);
+                        }
+                    });
+                });
+        })
+    </script>
+}

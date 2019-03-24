@@ -1,0 +1,29 @@
+﻿@using Newtonsoft.Json.Linq
+@model IEnumerable<Newtonsoft.Json.Linq.JObject>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+<table>
+    <thead><tr>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th></th>
+    </tr></thead>
+    @foreach (JObject user in Model)
+    {
+        <tr>
+            <td>@user["LastName"].ToString()</td>
+            <td>@user["FirstName"].ToString()</td>
+            <td>@user["Email"].ToString()</td>
+            <td>@user["Role"].ToString()</td>
+            <td>@Html.ActionLink("Edit","EditUser",new {UserID = user["UserID"].ToString()})</td>
+        </tr>
+    }
+
+</table>
+

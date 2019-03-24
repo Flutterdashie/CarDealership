@@ -61,19 +61,41 @@ namespace CarDealership.Api_Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("api/Admin/Users/{id}")]
+        public IHttpActionResult GetUser(string id)
+        {
+            return Ok(_dataSource.GetUserByID(id));
+        }
+
+        [HttpGet]
+        [Route("api/Admin/Users")]
         public IHttpActionResult Users()
         {
             return Ok(_dataSource.GetUsers());
         }
 
-        public IHttpActionResult AddUser()
+        [HttpPost]
+        [Route("api/Admin/Users")]
+        public IHttpActionResult AddUser([FromBody] JObject newUser)
         {
-            throw new NotImplementedException();
+            string response = _dataSource.AddUser(newUser);
+            return (!response.Contains(" ")) ? Ok(response) as IHttpActionResult : BadRequest(response);
         }
 
-        public IHttpActionResult EditUser()
+        [HttpPut]
+        [Route("api/Admin/Users")]
+        public IHttpActionResult EditUser([FromBody] JObject editedUser)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dataSource.EditUser(editedUser);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest("Input contained missing or invalid fields");
+            }
         }
 
         public IHttpActionResult Makes()

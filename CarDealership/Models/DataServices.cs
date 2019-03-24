@@ -45,7 +45,7 @@ namespace CarDealership.Models
                 _repo.EditVehicle(CarFromJSON(input));
                 return true;
             }
-            catch 
+            catch
             {
                 //TODO: Make this a TON safer
                 return false;
@@ -76,6 +76,28 @@ namespace CarDealership.Models
             }
         }
 
+        public string AddUser(JObject newUser)
+        {
+            try
+            {
+                UserView user = UserFromJSON(newUser);
+                return _secRepo.AddUser(user.FirstName, user.LastName, user.Email, user.Role,
+                    newUser["Password"].ToString());
+            }
+            catch
+            {
+                return "User creation failed.";
+            }
+
+        }
+
+        public void EditUser(JObject editedUser)
+        {
+            UserView user = UserFromJSON(editedUser);
+            _secRepo.EditUser(user.UserID,user.FirstName,user.LastName,user.Email,user.Role,editedUser["OldPassword"].ToString(),editedUser["NewPassword"].ToString());
+        }
+
+
         private static JObject CarToJSON(Car input)
         {
             return new JObject
@@ -102,18 +124,18 @@ namespace CarDealership.Models
         {
             Car car = new Car
             {
-                CarID = (int) input["ID"],
+                CarID = (int)input["ID"],
                 VIN = input["VIN"].ToString(),
-                CarYear = (int) input["Year"],
+                CarYear = (int)input["Year"],
                 BodyStyle = input["Body"].ToString(),
                 Transmission = input["Transmission"].ToString(),
                 Color = input["Color"].ToString(),
                 Interior = input["Interior"].ToString(),
-                Mileage = (int) input["Mileage"],
-                IsNew = (int) input["Mileage"] < 1000,
+                Mileage = (int)input["Mileage"],
+                IsNew = (int)input["Mileage"] < 1000,
                 IsFeatured = ((int?)input?["IsFeatured"] ?? 0) == 1,
-                MakeID = (int) input["MakeID"],
-                ModelID = (int) input["ModelID"],
+                MakeID = (int)input["MakeID"],
+                ModelID = (int)input["ModelID"],
                 SalePrice = decimal.Parse(input["SalePrice"].ToString()),
                 MSRP = decimal.Parse(input["MSRP"].ToString()),
                 CarDescription = input["Description"].ToString()
@@ -156,5 +178,7 @@ namespace CarDealership.Models
         {
             return _repo.GetMakes().FirstOrDefault(m => m.MakeID == makeID);
         }
+
+
     }
 }

@@ -48,6 +48,7 @@ namespace CarDealership.Models.Repositories
 
         public void EditUser(string userID, string firstName, string lastName, string email, string role, string currentPassword, string newPassword)
         {
+            //TODO: Create success-based response
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<UserManager<AppUser>>();
             if (!string.IsNullOrWhiteSpace(newPassword))
             {
@@ -110,7 +111,7 @@ namespace CarDealership.Models.Repositories
                 {
                     Connection = conn,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "GetUsers"
+                    CommandText = "GetUser"
                 };
                 cmd.Parameters.AddWithValue("@UserID", userID);
                 conn.Open();

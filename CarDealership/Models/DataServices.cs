@@ -129,6 +129,49 @@ namespace CarDealership.Models
             return _repo.AddModel(newModel["ModelName"].ToString(), (int) newModel["MakeID"]).ModelID;
         }
 
+        public int AddSpecial(JObject newSpecial)
+        {
+            try
+            {
+            return _repo.AddSpecial(newSpecial["Title"].ToString(), newSpecial["Description"].ToString()).SpecialID;
+
+            }
+            catch (Exception)
+            {
+
+                return -1;
+            }
+        }
+
+        public bool DeleteSpecial(int id)
+        {
+            try
+            {
+                _repo.DeleteSpecial(id);
+                return true;
+            }
+            catch (ArgumentNullException)
+            {
+                //This is the safe way
+                return false;
+            }
+            catch
+            {
+                //This is the danger way
+                throw;
+            }
+        }
+
+        public IEnumerable<JObject> GetSpecials()
+        {
+            return _repo.GetSpecials().Select(special => new JObject
+            {
+                {"SpecialID", special.SpecialID},
+                {"Title", special.SpecialName},
+                {"Description", special.SpecialDescription}
+            });
+        }
+
         private static JObject CarToJSON(Car input)
         {
             return new JObject

@@ -124,5 +124,26 @@ namespace CarDealership.Models.Repositories
         {
             return _database.Models;
         }
+
+        public IEnumerable<Special> GetSpecials()
+        {
+            return _database.Specials;
+        }
+
+        public Special AddSpecial(string title, string description)
+        {
+            Special newSpecial = _database.Specials.Create();
+            newSpecial.SpecialDescription = description;
+            newSpecial.SpecialName = title;
+            Special output = _database.Specials.Add(newSpecial);
+            _database.SaveChanges();
+            return output;
+        }
+
+        public void DeleteSpecial(int id)
+        {
+            _database.Entry(_database.Specials.Find(id)).State = EntityState.Deleted;
+            _database.SaveChanges();
+        }
     }
 }

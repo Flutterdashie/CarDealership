@@ -127,7 +127,6 @@ namespace CarDealership.Api_Controllers
         public IHttpActionResult Models()
         {
             return Ok(_dataSource.GetModels());
-            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -144,10 +143,47 @@ namespace CarDealership.Api_Controllers
             }
         }
 
+        [HttpGet]
         [Route("api/Admin/Specials")]
         public IHttpActionResult Specials()
         {
-            throw new NotImplementedException();
+            //There is secretly no difference between this one and the Home one. I'll probably make only this one offer the ids later or something
+            return Ok(_dataSource.GetSpecials());
+        }
+
+        [HttpPost]
+        [Route("api/Admin/Specials")]
+        public IHttpActionResult AddSpecial([FromBody] JObject newSpecial)
+        {
+            int result = _dataSource.AddSpecial(newSpecial);
+            return (result != -1)
+                ? Ok(result) as IHttpActionResult
+                : BadRequest("Special creation failed");
+        }
+
+        [HttpDelete]
+        [Route("api/Admin/Specials")]
+        public IHttpActionResult DeleteSpecial([FromBody] JObject targetSpecial)
+        {
+            //TODO: Make this handle the errors inside the DataServices instead
+            try
+            {
+                bool result = _dataSource.DeleteSpecial(int.Parse(targetSpecial["SpecialID"].ToString()));
+
+                return result ? Ok("Success") : throw new Exception("welp, something else failed.");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Improperly parsed JSON");
+            }
+            catch (FormatException)
+            {
+                return BadRequest("Improperly parsed JSON");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Special could not be deleted. Ensure special exists.");
+            }
         }
     }
 }

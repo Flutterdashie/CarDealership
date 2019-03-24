@@ -97,6 +97,20 @@ namespace CarDealership.Models
             _secRepo.EditUser(user.UserID,user.FirstName,user.LastName,user.Email,user.Role,editedUser["OldPassword"].ToString(),editedUser["NewPassword"].ToString());
         }
 
+        public IEnumerable<JObject> GetMakes()
+        {
+            //I almost forgot that linq could do this. Yay!
+            return _repo.GetMakes().Select(make => new JObject
+            {
+                {"MakeID", make.MakeID},
+                {"MakeName", make.MakeName}
+            });
+        }
+
+        public int AddMake(JObject newMake)
+        {
+            return _repo.AddMake(newMake["MakeName"].ToString()).MakeID;
+        }
 
         private static JObject CarToJSON(Car input)
         {

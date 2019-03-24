@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Makes";
+}
+
+<h2>Makes</h2>
+<form id="addMake" class="form-horizontal form-inline">
+    <div class="form-group">
+        <label for="newMake">New Make: </label>
+        <input type="text" name="newMake" id="newMake" />
+    </div>
+    <div class="form-group"><button class="btn btn-primary" type="submit">Save</button></div>
+</form>
+
+
+<table class="table-striped">
+    <thead>
+        <tr>
+            <th>Make ID</th>
+            <th>Make Name</th>
+        </tr>
+    </thead>
+    <tbody id="makeList"></tbody>
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function RepopulateList() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/makes/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#makeList').empty();
+                    $.each(data,
+                        function (index, item) {
+                            var row = '<tr><td>' + item.MakeID + '</td><td>' + item.MakeName + '</td></tr>';
+                            $('#makeList').append(row);
+                        });
+                },
+                error: function (jqXHR) {
+                    alert('the get broke and said: ' + jqXHR.responseText);
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            RepopulateList();
+
+
+            $('#addMake').on('submit',
+                function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:55792/api/admin/makes/',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        data: JSON.stringify({
+                            MakeName: $('#newMake').val()
+                        }),
+                        success: function () {
+                            RepopulateList();
+                        },
+                        error: function (jqXHR) {
+                            alert('the post broke and said: ' + jqXHR.responseText);
+                            RepopulateList();
+                        }
+                    });
+                });
+        })
+    </script>
+}

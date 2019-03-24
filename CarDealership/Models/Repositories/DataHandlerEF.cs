@@ -45,6 +45,15 @@ namespace CarDealership.Models.Repositories
             _database.SaveChanges();
         }
 
+        public Make AddMake(string makeName)
+        {
+            Make newMake = _database.Makes.Create();
+            newMake.MakeName = makeName;
+            Make output = _database.Makes.Add(newMake);
+            _database.SaveChanges();
+            return output;
+        }
+
         public Car GetVehicleByID(int id)
         {
             using (SqlConnection conn = new SqlConnection())

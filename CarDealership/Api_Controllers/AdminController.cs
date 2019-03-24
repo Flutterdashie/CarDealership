@@ -99,10 +99,26 @@ namespace CarDealership.Api_Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpGet]
         [Route("api/Admin/Makes")]
         public IHttpActionResult Makes()
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetMakes());
+        }
+
+        [HttpPost]
+        [Route("api/Admin/Makes")]
+        public IHttpActionResult AddMake([FromBody] JObject newMake)
+        {
+            try
+            {
+                return Ok(_dataSource.AddMake(newMake));
+            }
+            catch
+            {
+                return BadRequest("You messed up the simplest JSON in this whole program. Nice.");
+            }
         }
 
         [Route("api/Admin/Models")]

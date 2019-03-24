@@ -137,7 +137,7 @@ namespace CarDealership.Controllers
         [Route("Admin/Makes")]
         public ActionResult Makes()
         {
-            throw new NotImplementedException();
+            return View();
         }
 
         [Authorize(Roles = "Admin")]

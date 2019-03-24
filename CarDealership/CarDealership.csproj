@@ -267,6 +267,7 @@
     <Content Include="Views\AllView\EditUser.cshtml" />
     <Content Include="Views\AllView\AddUser.cshtml" />
     <Content Include="Views\AllView\Details.cshtml" />
+    <Content Include="Views\AllView\Makes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

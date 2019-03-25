@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "AddVehicle";
+}
+
+<h2>AddVehicle</h2>
+
+<form id="newCar">
+    <div class="row">
+
+        <div class="col-6 form-group">
+            <label for="carMake">Make</label>
+            <select id="carMake" onchange="UpdateModels()" required></select>
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="carModel">Model</label>
+            <select id="carModel" required>
+                <option value="-2" disabled selected>Model</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-group">
+            <input type="checkbox" id="isNew" />
+            <label for="isNew">New</label>
+        </div>
+        <div class="col-6 form-group">
+            <label for="carBody">Body Style</label>
+            <select id="carBody" required>
+                <option value="cheater!" disabled>Body</option>
+                <option value="Car">Car</option>
+                <option value="SUV">SUV</option>
+                <option value="Truck">Truck</option>
+                <option value="Van">Van</option>
+            </select>
+        </div>
+    </div>
+    
+
+</form>
+
+@section scripts {
+    <script type="text/javascript" >
+        function UpdateModels() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/models/' + $('#carMake').val(),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#carModel').empty();
+                    $('#carModel').append('<option value="-2" disabled selected>Model</option>');
+                    $.each(data,
+                        function (index, item) {
+                            var option = '<option value="' + item.ModelID + '">' + item.ModelName + '</option>';
+                            $('#carModel').append(option);
+                        });
+                    $('#carModel').attr('disabled', false);
+                },
+                error: function (jqXHR) {
+                    $('#carModel').attr('disabled', true);
+                    alert('the model getter broke and said: ' + jqXHR.responseText);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/admin/makes/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data) {
+                    $('#carMake').empty();
+                    $('#carMake').append('<option value="-2" disabled selected>Make</option>');
+                    $.each(data,
+                        function(index, item) {
+                            var option = '<option value="' + item.MakeID + '">' + item.MakeName + '</option>';
+                            $('#carMake').append(option);
+                        });
+                    $('#carMake').attr('disabled', false);
+                },
+                error: function(jqXHR) {
+                    $('#carMake').attr('disabled', true);
+                    alert('the make getter broke and said: ' + jqXHR.responseText);
+                }
+            });
+        });
+    </script>
+}

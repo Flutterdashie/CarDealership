@@ -192,6 +192,12 @@ namespace CarDealership.Api_Controllers
             return Ok(_dataSource.GetModels());
         }
 
+        [Route("api/Admin/Models/{id}"), AllowAnonymous, HttpGet]
+        public IHttpActionResult Models(int id)
+        {
+            return Ok(_dataSource.GetModelsForMake(id));
+        }
+
         [Route("api/Admin/Models"), Authorize(Roles = "Admin"), HttpPost]
         public IHttpActionResult AddModel([FromBody] JObject newModel)
         {

@@ -26,6 +26,7 @@ namespace CarDealership.Controllers
         public ActionResult AddVehicle()
         {
             //TODO: AJAX for models/makes
+            return View();
             throw new NotImplementedException();
         }
 

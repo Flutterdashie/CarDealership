@@ -42,6 +42,7 @@ namespace CarDealership.Models
         {
             try
             {
+                //TODO: make this check for the -1 thing that comes from missing/bad ids
                 _repo.EditVehicle(CarFromJSON(input));
                 return true;
             }
@@ -124,6 +125,15 @@ namespace CarDealership.Models
             });
         }
 
+        public IEnumerable<JObject> GetModelsForMake(int makeID)
+        {
+            return GetMake(makeID)?.Models.Select(m => new JObject
+            {
+                {"ModelID", m.ModelID},
+                {"ModelName", m.ModelName}
+            }) ?? new List<JObject>();
+        }
+
         public int AddModel(JObject newModel)
         {
             return _repo.AddModel(newModel["ModelName"].ToString(), (int) newModel["MakeID"]).ModelID;
@@ -182,8 +192,6 @@ namespace CarDealership.Models
             throw new NotImplementedException();
         }
 
-
-
         private static JObject CarToJSON(Car input)
         {
             return new JObject
@@ -209,9 +217,11 @@ namespace CarDealership.Models
 
         private static Car CarFromJSON(JObject input)
         {
+            bool featured = input.ContainsKey("IsFeatured") && ((int)input["IsFeatured"] == 1);
+            int id = (input.ContainsKey("ID")) ? (int) input["ID"] : -1;
             Car car = new Car
             {
-                CarID = (int)input["ID"],
+                CarID = id,
                 VIN = input["VIN"].ToString(),
                 CarYear = (int)input["Year"],
                 BodyStyle = input["Body"].ToString(),
@@ -220,7 +230,7 @@ namespace CarDealership.Models
                 Interior = input["Interior"].ToString(),
                 Mileage = (int)input["Mileage"],
                 IsNew = (int)input["Mileage"] < 1000,
-                IsFeatured = ((int?)input?["IsFeatured"] ?? 0) == 1,
+                IsFeatured = featured,
                 MakeID = (int)input["MakeID"],
                 ModelID = (int)input["ModelID"],
                 SalePrice = decimal.Parse(input["SalePrice"].ToString()),

@@ -14,9 +14,18 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("New","New","Inventory")</li>
+                <li>@Html.ActionLink("Used","Used","Inventory")</li>
                 @if (this.Context.User.IsInRole("Admin"))
                 {
-                    <li>@Html.ActionLink("Users","Users","Admin"))</li>
+                    <li>@Html.ActionLink("Users", "Users", "Admin")</li>
+                    <li>@Html.ActionLink("Makes", "Makes", "Admin")</li>
+                    <li>@Html.ActionLink("Models", "Models", "Admin")</li>
+                    <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
+                }
+                @if (Context.User.IsInRole("Sales"))
+                {
+                    <li>@Html.ActionLink("Sales", "Index", "Sales")</li>
                 }
             </ul>
         </div>

@@ -1,43 +1,36 @@
 ﻿using System;
-using System.Web.Http;
-using CarDealership.Models;
-using CarDealership.Models.ServiceModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Controllers
 {
-    [AllowAnonymous]
-    public class InventoryController : ApiController
+    public class InventoryController : Controller
     {
-        private static DataServices _dataSource = new DataServices();
 
-        [HttpGet]
-        [HttpPost]
         [Route("Inventory/New")]
-        public IHttpActionResult New([FromBody] CarSearchFilters filters)
+        public ActionResult New()
         {
-            return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff, true));
+            //Hooray, this one is working and uses ajax!
+            return View();
+
         }
 
-        [HttpGet]
-        [HttpPost]
         [Route("Inventory/Used")]
-        public IHttpActionResult Used([FromBody] CarSearchFilters filters)
+        public ActionResult Used()
         {
-            return Ok(_dataSource.GetVehicles(filters, RoleType.NonStaff));
+            //Hooray, this one is working and uses ajax!
+            return View();
         }
 
-        [HttpGet]
         [Route("Inventory/Details/{id}")]
-        public IHttpActionResult Details(int id)
+        public ActionResult Details(int id)
         {
-            try
-            {
-                return Ok(_dataSource.GetVehicleByID(id));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            //TODO: Make this not cheat
+            ViewBag.CarID = id;
+            return View();
+            throw new NotImplementedException();
         }
     }
 }

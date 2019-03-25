@@ -1,21 +1,30 @@
 ﻿using System;
-using System.Web.Http;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    public class ReportsController : ApiController
+    [Authorize(Roles = "Admin")]
+    public class ReportsController : Controller
     {
-        public IHttpActionResult Index()
+        
+        [Route("Reports/Index")]
+        public ActionResult Index()
+        {
+            throw new NotImplementedException();
+            //return View();
+        }
+
+        [Route("Reports/Sales")]
+        public ActionResult Sales()
         {
             throw new NotImplementedException();
         }
 
-        public IHttpActionResult Sales()
-        {
-            throw new NotImplementedException();
-        }
-        public IHttpActionResult Inventory()
+        [Route("Reports/Inventory")]
+        public ActionResult Inventory()
         {
             throw new NotImplementedException();
         }

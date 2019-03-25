@@ -1,92 +1,86 @@
 ﻿using System;
-using System.Web.Http;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using CarDealership.Models;
 using CarDealership.Models.ServiceModels;
-using Newtonsoft.Json.Linq;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    public class AdminController : ApiController
+    [Authorize(Roles = "Admin")]
+    public class AdminController : Controller
     {
-        private static DataServices _dataSource = new DataServices();
-
+        private static DataServices _apiSkipper = new DataServices();
+        // TODO: Rewrite everything that uses _apiSkipper
+        
         [Route("Admin/Vehicles")]
-        [HttpPost]
-        public IHttpActionResult Vehicles([FromBody] CarSearchFilters filters)
+        public ActionResult Vehicles()
         {
-            return Ok(_dataSource.GetVehicles(filters, RoleType.Admin));
+            //Hooray, this one is working and uses ajax!
+            return View();
         }
 
+        
         [Route("Admin/AddVehicle")]
-        [HttpPost]
-        public IHttpActionResult AddVehicle([FromBody] JObject newVehicle)
+        public ActionResult AddVehicle()
         {
-            return Ok(_dataSource.AddVehicle(newVehicle));
+            //TODO: AJAX for models/makes
+            throw new NotImplementedException();
         }
 
+        
         [Route("Admin/EditVehicle/{id}")]
-        [HttpPost]
-        public IHttpActionResult EditVehicle(int id,[FromBody] JObject editedVehicle)
+        public ActionResult EditVehicle(int id)
         {
-            // TODO: See if there's a safer way to include this
-            //if (id != (int) editedVehicle["ID"])
-            //{
-            //    return BadRequest("Path/ID Mismatch");
-            //}
-
-            return _dataSource.EditVehicle(editedVehicle) ? Ok() as IHttpActionResult : BadRequest();
-        }
-
-        [Route("Admin/EditVehicle/{id}")]
-        [HttpGet]
-        public IHttpActionResult EditVehicle(int id)
-        {
-            try
-            {
-                return Ok(_dataSource.GetVehicleByID(id));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [Route("Admin/DeleteVehicle/{id}")]
-        [HttpDelete]
-        public IHttpActionResult DeleteVehicle(int id)
-        {
-            _dataSource.DeleteVehicle(id);
-            return Ok();
-        }
-
-        public IHttpActionResult Users()
-        {
+            //TODO: AJAX for models/makes
             throw new NotImplementedException();
         }
 
-        public IHttpActionResult AddUser()
+        
+        [Route("Admin/Users")]
+        public ActionResult Users()
         {
+            //TODO: Make this NOT circumvent the api
+            return View(_apiSkipper.GetUsers());
             throw new NotImplementedException();
         }
 
-        public IHttpActionResult EditUser()
+        
+        [Route("Admin/AddUser")]
+        public ActionResult AddUser()
         {
+            //TODO: Fix this.
+            return View();
             throw new NotImplementedException();
         }
 
-        public IHttpActionResult Makes()
+        
+        [Route("Admin/EditUser")]
+        public ActionResult EditUser(UserView model)
         {
-            throw new NotImplementedException();
+            return View(model);
         }
 
-        public IHttpActionResult Models()
+        
+        [Route("Admin/Makes")]
+        public ActionResult Makes()
         {
-            throw new NotImplementedException();
+            return View();
         }
 
-        public IHttpActionResult Specials()
+        
+        [Route("Admin/Models")]
+        public ActionResult Models()
         {
+            return View();
+        }
+
+        
+        [Route("Admin/Specials")]
+        public ActionResult AdminSpecials()
+        {
+            return View();
             throw new NotImplementedException();
         }
     }

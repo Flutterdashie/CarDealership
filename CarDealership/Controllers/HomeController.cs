@@ -1,48 +1,29 @@
 ﻿using System;
-using System.Web.Http;
-using CarDealership.Models.DataModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace CarDealership.Api_Controllers.Controllers
+namespace CarDealership.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : ApiController
+    public class HomeController : Controller
     {
-        public IHttpActionResult Index()
+        [Route("Home/Index")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Route("Home/Specials")]
+        public ActionResult Specials()
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet]
-        public IHttpActionResult Specials()
+        [Route("Home/Contact")]
+        public ActionResult Contact()
         {
-            //TODO: Create JSON Array of specials
-            throw new NotImplementedException();
-        }
-
-        [HttpPost]
-        public IHttpActionResult Contact([FromBody] Contact newContact)
-        {
-            if(newContact == null)
-            {
-                return BadRequest("Could not parse from form.");
-            }
-            if (string.IsNullOrWhiteSpace(newContact.ContactName))
-            {
-                return BadRequest("Please enter your name.");
-            }
-
-            if (string.IsNullOrWhiteSpace(newContact.ContactMessage))
-            {
-                return BadRequest("Please enter a message.");
-            }
-
-            if(string.IsNullOrWhiteSpace(newContact.Email) && string.IsNullOrWhiteSpace(newContact.Phone))
-            {
-                return BadRequest("Please provide a means of contact.");
-            }
-
-            newContact.ContactID = 0;
-            //TODO: Store new contact object
             throw new NotImplementedException();
         }
     }

@@ -35,6 +35,7 @@ namespace CarDealership.Controllers
         public ActionResult EditVehicle(int id)
         {
             //TODO: AJAX for models/makes
+            return View(id);
             throw new NotImplementedException();
         }
 

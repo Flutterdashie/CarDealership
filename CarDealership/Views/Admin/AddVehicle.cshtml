@@ -10,24 +10,25 @@
 
         <div class="col-6 form-group">
             <label for="carMake">Make</label>
-            <select id="carMake" onchange="UpdateModels()" required></select>
+            <select class="form-control" id="carMake" onchange="UpdateModels()" required></select>
         </div>
 
         <div class="col-6 form-group">
             <label for="carModel">Model</label>
-            <select id="carModel" required>
+            <select class="form-control" id="carModel" required>
                 <option value="-2" disabled selected>Model</option>
             </select>
         </div>
     </div>
     <div class="row">
         <div class="col-6 form-group">
-            <input type="checkbox" id="isNew" />
-            <label for="isNew">New</label>
+            <label class="form-text">Category</label>
+            <label class="form-check-label" for="isNew">New</label>
+            <input class="form-check-inline" type="checkbox" id="isNew"/>
         </div>
         <div class="col-6 form-group">
             <label for="carBody">Body Style</label>
-            <select id="carBody" required>
+            <select class="form-control" id="carBody" required>
                 <option value="cheater!" disabled>Body</option>
                 <option value="Car">Car</option>
                 <option value="SUV">SUV</option>
@@ -36,8 +37,87 @@
             </select>
         </div>
     </div>
-    
 
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="carYear">Year</label>
+            <input class="form-control" type="text" id="carYear" pattern="(\d){4}" required />
+        </div>
+        <div class="col-6 form-group">
+            <label for="carTrans">Transmission</label>
+            <select class="form-control" id="carTrans" required>
+                <option value="Automatic" selected>Automatic</option>
+                <option value="Manual">Manual</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="carColor">Color</label>
+            <select class="form-control" id="carColor" required>
+                <option value="Black">Black</option>
+                <option value="Silver">Silver</option>
+                <option value="Blue">Blue</option>
+                <option value="Red">Red</option>
+                <option value="White">White</option>
+            </select>
+        </div>
+        <div class="col-6 form-group">
+            <label for="carInterior">Interior</label>
+            <select class="form-control" id="carInterior" required>
+                <option value="Black">Black</option>
+                <option value="Silver">Silver</option>
+                <option value="Blue">Blue</option>
+                <option value="Red">Red</option>
+                <option value="White">White</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-6 form-group">
+            <label for="carMileage">Mileage</label>
+            <input class="form-control" type="number" id="carMileage" required />
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="carVIN">VIN</label>
+            <input class="form-control" type="text" id="carVIN" required />
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-6 form-group">
+            <label for="carMSRP">MSRP</label>
+            <input class="form-control" type="number" id="carMSRP" step="0.01" required />
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="carSalePrice">Sale Price</label>
+            <input class="form-control" type="number" step="0.01" id="carSalePrice" required />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12 form-group">
+            <label for="carDesc">Description</label>
+            <textarea id="carDesc" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 form-group">
+            <input class="form-control-file" type="file" accept="image" id="carImage"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-group">
+            <button type="submit" class="form-control-sm">Save</button>
+        </div>
+    </div>
 </form>
 
 @section scripts {

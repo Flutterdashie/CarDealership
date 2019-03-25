@@ -10,11 +10,13 @@
     <div class="row">
         <input type="hidden" id="carID"/>
         <div class="col-6 form-group">
+            <span id="carMakeBox"></span>
             <label for="carMake">Make</label>
             <select class="form-control" id="carMake" onchange="UpdateModels()" required></select>
         </div>
 
         <div class="col-6 form-group">
+            <span id="carModelBox"></span>
             <label for="carModel">Model</label>
             <select class="form-control" id="carModel" required>
                 <option value="-2" disabled selected>Model</option>
@@ -113,10 +115,18 @@
         <div class="col-6 form-group">
             <input class="form-control-file" type="file" accept="image" id="carImage" />
         </div>
+        <div class="col-6 form-group">
+            <label class="form-text">Feature This Vehicle</label>
+            <label class="form-check-label" for="isFeatured">Featured</label>
+            <input class="form-check-inline" type="checkbox" id="isFeatured" />
+        </div>
     </div>
     <div class="row">
         <div class="col-6 form-group">
-            <button type="submit" class="form-control-sm">Save</button>
+            <button type="submit" class="btn btn-primary form-control-sm">Save</button>
+        </div>
+        <div class="col-6 form-group">
+            <button type="button" class="btn btn-danger form-control-sm" onclick="return confirm('Are you sure?')? DeleteVehicle(@Model) : ''">Delete</button>
         </div>
     </div>
 </form>
@@ -124,10 +134,14 @@
 @section scripts {
     <script type="text/javascript" src="~/Scripts/MakeModelMenu.js"></script>
     <script type="text/javascript">
+        function DeleteVehicle(id) {
+            alert('deleted ' + id + ' but not actually');
+            //Delete stuff here
+        }
         $(document).ready(function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/models/' + @Model,
+                url: 'http://localhost:55792/api/admin/EditVehicle/' + @Model,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -136,15 +150,21 @@
                     UpdateMakes();
                     $('#carID').val(data.ID);
                     $('#carYear').val(data.Year);
-                    $('#carMake').val(data.Make);
-                    $('#carModel').val(data.Model);
+                    $('#carMakeBox').text(data.Make);
+                    $('#carModelBox').text(data.Model);
                     $('#carBody').val(data.Body);
                     $('#carTrans').val(data.Transmission);
                     $('#carColor').val(data.Color);
+                    $('#carVIN').val(data.VIN);
+                    $('#carDesc').val(data.Description);
+                    $('#isNew').attr('checked', data.IsNew === 1);
+                    $('#isFeatured').attr('checked', data.IsFeatured === 1);
+
                 },
                 error: function (jqXHR) {
                     $('#carModel').attr('disabled', true);
-                    alert('the model getter broke and said: ' + jqXHR.responseText);
+                    $('#carMake').attr('disabled', true);
+                    alert('the car getter broke and said: ' + jqXHR.responseText);
                 }
             });
         });

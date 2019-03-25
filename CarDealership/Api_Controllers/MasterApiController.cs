@@ -24,7 +24,8 @@ namespace CarDealership.Api_Controllers
         [Route("api/Home/Index"), AllowAnonymous, HttpGet]
         public IHttpActionResult Index()
         {
-            throw new NotImplementedException();
+            //So this just grabs featured vehicles
+            return Ok(_dataSource.GetFeatured());
         }
 
         [Route("api/Home/Specials"), AllowAnonymous, HttpGet]

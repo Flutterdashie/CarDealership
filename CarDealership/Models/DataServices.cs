@@ -172,6 +172,18 @@ namespace CarDealership.Models
             });
         }
 
+        public IEnumerable<JObject> GetFeatured()
+        {
+            return _repo.GetFeatured().Select(c => new JObject
+            {
+                {"MakeModelYear",c.CarYear + " " + c.Make.MakeName + " " + c.Model.ModelName},
+                {"Price", $"{c.SalePrice:C}"}
+            });
+            throw new NotImplementedException();
+        }
+
+
+
         private static JObject CarToJSON(Car input)
         {
             return new JObject

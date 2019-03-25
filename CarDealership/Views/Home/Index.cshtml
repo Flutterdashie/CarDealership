@@ -2,15 +2,73 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
-<div class="jumbotron">
     <div class="carousel slide" id="bigBanner">
         <div class="carousel-inner" id="bigDisplay">
-            <div class="carousel-item active">hi</div>
-            <div class="carousel-item">there</div>
+            <div class="item active">hi</div>
+            <div class="item">there</div>
         </div>
     </div>
     
+
+<hr/>
+<h3>Featured Vehicles</h3>
+<div class="row" id="featuredVehicles">
+
 </div>
+
+
+@section scripts {
+    <script type="text/javascript">
+        function PopulateSpecials() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/Home/Specials',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#bigDisplay').empty();
+                    $('#bigDisplay').append('<div class="item active">Hi welcome to cars buying place</div>');
+                    $.each(data,
+                        function (index, item) {
+                            var panel = '<div class="item"><h1>'+ item.Title +'</h1><h4>' + item.Description + '</h4></div>';
+                            $('#bigDisplay').append(panel);
+                        });
+                },
+                error: function (jqXHR) {
+                    alert('the specials thingy broke and said: ' + jqXHR.responseText);
+                }
+            });
+        }
+        function PopulateFeatured() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/Home/Index',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#featuredVehicles').empty();
+                    $.each(data,
+                        function (index, item) {
+                            var panel = '<div class="col-3"><h5>' + item.MakeModelYear + '</h5><h6>' + item.Price + '</h6></div>';
+                            $('#featuredVehicles').append(panel);
+                        });
+                    PopulateSpecials();
+                },
+                error: function (jqXHR) {
+                    alert('the featured thingy broke and said: ' + jqXHR.responseText);
+                    PopulateSpecials();
+                }
+            });
+        }
+
+        $(document).ready(PopulateFeatured());
+        
+
+
+
+    </script>
+}

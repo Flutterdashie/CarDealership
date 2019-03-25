@@ -26,6 +26,18 @@ namespace CarDealership.Models.Repositories
             return isAdmin ? firstResult : firstResult.OrderByDescending(c => c.MSRP).Take(20);
         }
 
+        public IEnumerable<Car> GetFeatured()
+        {
+            return _database.Cars.Where(c => c.IsFeatured);
+            //    .Select(c => new Car
+            //{
+            //    CarYear = c.CarYear,
+            //    Make = c.Make,
+            //    Model = c.Model,
+            //    SalePrice = c.SalePrice
+            //});
+        }
+
         public Car AddVehicle(Car newVehicle)
         {
             newVehicle = _database.Cars.Add(newVehicle);

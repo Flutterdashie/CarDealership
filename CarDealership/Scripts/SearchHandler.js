@@ -54,11 +54,11 @@ $('#searchForm').on('submit',
                     row += '<tr><td>Color: ' +item.Color + '</td><td>VIN: ' + item.VIN + '</td><td>' + detailsLink + '</td></tr></div>';
                     $('#vehicleList').append(row);
                 });
-                $('#errorMessages').addClass('hidden');
+                $('#errorMessages').hide();
             },
             error: function (xHR) {
                 $('#errorMessages').text(xHR.responseText);
-                $('#errorMessages').removeClass('hidden');
+                $('#errorMessages').show();
             }
         });
     });

@@ -201,19 +201,19 @@ namespace CarDealership.Models
         public IEnumerable<IEnumerable<JObject>> GetInventoryReport()
         {
             //TODO: There's got to be a way that I can compact this, both into 1 linq call and into one Jobject (or ienumerable thereof).
-            var newData = _repo.GetInventory(false).Where(c => c.IsNew).GroupBy(c => new string[] { c.CarYear.ToString(), c.Make.MakeName, c.Model.ModelName }).Select(g => new JObject
+            var newData = _repo.GetInventory(false).Where(c => c.IsNew).GroupBy(c => string.Join("$",c.CarYear.ToString(), c.Make.MakeName,c.Model.ModelName) ,c => c,(key, g) => new JObject
                 {
-                    {"Year",int.Parse(g.Key[0])},
-                    {"MakeName" ,g.Key[1]},
-                    {"ModelName", g.Key[2]},
+                    {"Year", int.Parse(key.Split('$')[0])},
+                    {"MakeName" ,key.Split('$')[1]},
+                    {"ModelName", key.Split('$')[2]},
                     {"Count", g.Count()},
                     {"StockValue", g.Sum(c => c.MSRP)}
                 });
-            var usedData = _repo.GetInventory(false).Where(c => !c.IsNew).GroupBy(c => new string[] { c.CarYear.ToString(), c.Make.MakeName, c.Model.ModelName }).Select(g => new JObject
+            var usedData = _repo.GetInventory(false).Where(c => !c.IsNew).GroupBy(c => string.Join("$",c.CarYear.ToString(), c.Make.MakeName,c.Model.ModelName) ,c => c,(key, g) => new JObject
             {
-                {"Year",int.Parse(g.Key[0])},
-                {"MakeName" ,g.Key[1]},
-                {"ModelName", g.Key[2]},
+                {"Year", int.Parse(key.Split('$')[0])},
+                {"MakeName" ,key.Split('$')[1]},
+                {"ModelName", key.Split('$')[2]},
                 {"Count", g.Count()},
                 {"StockValue", g.Sum(c => c.MSRP)}
             });
@@ -315,6 +315,21 @@ namespace CarDealership.Models
             return _repo.GetMakes().FirstOrDefault(m => m.MakeID == makeID);
         }
 
+        private class CarGrouping
+        {
+            public int Year;
+            public string Make;
+            public string Model;
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                    return false;
+                if (!(obj is CarGrouping))
+                    return base.Equals(obj);
+                CarGrouping temp = (CarGrouping) obj;
+                return (temp.Year == this.Year) && (temp.Make == this.Make) && (temp.Model == this.Model);
+            }
+        }
 
     }
 }

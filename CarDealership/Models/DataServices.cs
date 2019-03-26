@@ -196,6 +196,40 @@ namespace CarDealership.Models
             throw new NotImplementedException();
         }
 
+        #region Reports
+
+        public IEnumerable<IEnumerable<JObject>> GetInventoryReport()
+        {
+            //TODO: There's got to be a way that I can compact this, both into 1 linq call and into one Jobject (or ienumerable thereof).
+            var newData = _repo.GetInventory(false).Where(c => c.IsNew).GroupBy(c => new string[] { c.CarYear.ToString(), c.Make.MakeName, c.Model.ModelName }).Select(g => new JObject
+                {
+                    {"Year",int.Parse(g.Key[0])},
+                    {"MakeName" ,g.Key[1]},
+                    {"ModelName", g.Key[2]},
+                    {"Count", g.Count()},
+                    {"StockValue", g.Sum(c => c.MSRP)}
+                });
+            var usedData = _repo.GetInventory(false).Where(c => !c.IsNew).GroupBy(c => new string[] { c.CarYear.ToString(), c.Make.MakeName, c.Model.ModelName }).Select(g => new JObject
+            {
+                {"Year",int.Parse(g.Key[0])},
+                {"MakeName" ,g.Key[1]},
+                {"ModelName", g.Key[2]},
+                {"Count", g.Count()},
+                {"StockValue", g.Sum(c => c.MSRP)}
+            });
+            
+            return new List<IEnumerable<JObject>>
+            {
+                newData,
+                usedData
+            };
+            
+        }
+
+        #endregion
+
+
+        #region JSONConverters
         private static JObject CarToJSON(Car input)
         {
             return new JObject
@@ -269,6 +303,7 @@ namespace CarDealership.Models
                 UserID = input["UserID"].ToString()
             };
         }
+        #endregion
 
         private static Model GetModel(int modelID)
         {

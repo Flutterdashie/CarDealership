@@ -26,6 +26,11 @@ namespace CarDealership.Models.Repositories
             return isAdmin ? firstResult : firstResult.OrderByDescending(c => c.MSRP).Take(20);
         }
 
+        public IEnumerable<Car> GetInventory(bool isPurchased)
+        {
+            return _database.Cars.Where(c => c.Purchases.Any() == isPurchased);
+        }
+
         public IEnumerable<Car> GetFeatured()
         {
             return _database.Cars.Where(c => c.IsFeatured);

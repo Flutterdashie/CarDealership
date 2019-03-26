@@ -322,7 +322,7 @@ namespace CarDealership.Api_Controllers
         [Route("api/Reports/Inventory"), Authorize(Roles = "Admin"), HttpGet]
         public IHttpActionResult ReportsInventory()
         {
-            throw new NotImplementedException();
+            return Ok(_dataSource.GetInventoryReport());
         }
 
         [Route("api/Sales/Index"), Authorize(Roles = "Sales"), HttpGet]

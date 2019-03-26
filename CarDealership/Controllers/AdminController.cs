@@ -48,9 +48,7 @@ namespace CarDealership.Controllers
         [Route("Admin/AddUser")]
         public ActionResult AddUser()
         {
-            //TODO: Fix this.
             return View();
-            throw new NotImplementedException();
         }
 
         

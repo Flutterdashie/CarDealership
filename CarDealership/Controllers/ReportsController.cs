@@ -26,6 +26,7 @@ namespace CarDealership.Controllers
         [Route("Reports/Inventory")]
         public ActionResult Inventory()
         {
+            return View();
             throw new NotImplementedException();
         }
     }

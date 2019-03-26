@@ -316,6 +316,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\EditVehicle.cshtml" />
+    <Content Include="Views\Reports\Inventory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -326,7 +327,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AllView\" />
-    <Folder Include="Views\Reports\" />
     <Folder Include="Views\Sales\" />
   </ItemGroup>
   <ItemGroup>

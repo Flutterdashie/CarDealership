@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<h2>Inventory Report</h2>
+
+<h3>New Vehicles</h3>
+<table class="table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Count</th>
+            <th>Stock Value</th>
+        </tr>
+    </thead>
+    <tbody id="newReport"></tbody>
+</table>
+<br />
+<h3>Used Vehicles</h3>
+<table class="table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Count</th>
+            <th>Stock Value</th>
+        </tr>
+    </thead>
+    <tbody id="usedReport"></tbody>
+</table>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:55792/api/Reports/Inventory',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            success: function (data) {
+                $('#bigDisplay').empty();
+                $('#bigDisplay').append('<div class="item active">Hi welcome to cars buying place</div>');
+                $.each(data[0],
+                    function (index, item) {
+                        var row = '<tr><td>' + item.Year + '</td><td>' + item.MakeName + '</td><td>' + item.ModelName;
+                        row += '</td><td>' + item.Count + '</td><td>' + item.StockValue + '</td></tr>';
+                        $('#newReport').append(row);
+                    });
+                $.each(data[1],
+                    function (index, item) {
+                        var row = '<tr><td>' + item.Year + '</td><td>' + item.MakeName + '</td><td>' + item.ModelName;
+                        row += '</td><td>' + item.Count + '</td><td>' + item.StockValue + '</td></tr>';
+                        $('#usedReport').append(row);
+                    });
+            },
+            error: function (jqXHR) {
+                alert('the inventory thingy broke and said: ' + jqXHR.responseText);
+            }
+        });
+    </script>
+}

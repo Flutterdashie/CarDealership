@@ -158,7 +158,7 @@ namespace CarDealership.Api_Controllers
             try
             {
                 _dataSource.EditUser(editedUser);
-                return Ok();
+                return Ok("Success");
             }
             catch
             {

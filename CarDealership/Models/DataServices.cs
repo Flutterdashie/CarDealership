@@ -95,7 +95,11 @@ namespace CarDealership.Models
         public void EditUser(JObject editedUser)
         {
             UserView user = UserFromJSON(editedUser);
-            _secRepo.EditUser(user.UserID,user.FirstName,user.LastName,user.Email,user.Role,editedUser["OldPassword"].ToString(),editedUser["NewPassword"].ToString());
+            string currentPassword =
+                (editedUser.ContainsKey("OldPassword")) ? editedUser["OldPassword"].ToString() : null;
+            string newPassword =
+                (editedUser.ContainsKey("NewPassword")) ? editedUser["NewPassword"].ToString() : null;
+            _secRepo.EditUser(user.UserID,user.FirstName,user.LastName,user.Email,user.Role,currentPassword,newPassword);
         }
 
         public IEnumerable<JObject> GetMakes()

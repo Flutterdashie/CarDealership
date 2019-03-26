@@ -6,26 +6,36 @@
 
 <h2>Edit User</h2>
 
-<form id="editUserForm" class="panel">
-    <input class="panel-heading" type="text" name="UserID" value="@Model.UserID" disabled/>
-    <div class="panel-body">
+<form id="editUserForm">
+    <input type="text" name="UserID" id="UserID" value="@Model.UserID" disabled/>
+    <div>
         <div class="form-group">
             <label for="FirstName">First Name</label>
             <input type="text" name="FirstName" id="FirstName" />
         </div>
         <div class="form-group">
+            <label for="LastName">First Name</label>
             <input type="text" name="LastName" id="LastName" />
         </div>
         <div class="form-group">
+            <label for="Email">First Name</label>
             <input type="text" name="Email" id="Email" />
         </div>
         <div class="form-group">
+            <label for="Role">Role</label>
             <select type="text" name="Role" id="Role">
                 <option value="Admin">Admin</option>
                 <option value="Sales">Sales</option>
                 <option value="Disabled">Disabled</option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="oldPassword">Old Password</label>
+            <input type="password" name="oldPassword" id="oldPassword"/>
+            <label for="newPassword">New Password</label>
+            <input type="password" name="newPassword" id="newPassword"/>
+        </div>
+
         <button type="submit">Submit Edits</button>
     </div>
 </form>
@@ -70,7 +80,9 @@
                             LastName: $('#LastName').val(),
                             Email: $('#Email').val(),
                             Role: $('#Role').val(),
-                            UserID: $('#UserID').val()
+                            UserID: $('#UserID').val(),
+                            OldPassword: $('#oldPassword').val(),
+                            NewPassword: $('#newPassword').val()
                         }),
                         success: function() {
                             alert('Edit succeeded');

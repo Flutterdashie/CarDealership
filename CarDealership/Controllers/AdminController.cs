@@ -25,18 +25,15 @@ namespace CarDealership.Controllers
         [Route("Admin/AddVehicle")]
         public ActionResult AddVehicle()
         {
-            //TODO: AJAX for models/makes
             return View();
-            throw new NotImplementedException();
         }
 
         
         [Route("Admin/EditVehicle/{id}")]
         public ActionResult EditVehicle(int id)
         {
-            //TODO: AJAX for models/makes
+            //TODO: maybe figure out how to fix ajax idk
             return View(id);
-            throw new NotImplementedException();
         }
 
         
@@ -45,7 +42,6 @@ namespace CarDealership.Controllers
         {
             //TODO: Make this NOT circumvent the api
             return View(_apiSkipper.GetUsers());
-            throw new NotImplementedException();
         }
 
         

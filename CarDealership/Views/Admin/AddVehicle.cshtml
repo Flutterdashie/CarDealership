@@ -124,5 +124,38 @@
     <script type="text/javascript" src="~/Scripts/MakeModelMenu.js"></script>
     <script type="text/javascript" >
         $(document).ready(UpdateMakes());
+
+        $('#newCar').on('submit',
+            function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:55792/api/admin/AddVehicle/',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    'dataType': 'json',
+                    data: JSON.stringify({
+                        VIN: $('#carVIN').val(),
+                        Year: $('#carYear').val(),
+                        Body: $('#carBody').val(),
+                        Transmission: $('#carTrans').val(),
+                        Color: $('#carColor').val(),
+                        Interior: $('#carInterior').val(),
+                        Mileage: $('#carMileage').val(),
+                        MakeID: $('#carMake').val(),
+                        ModelID: $('#carModel').val(),
+                        SalePrice: $('#carSalePrice').val(),
+                        MSRP: $('#carMSRP').val(),
+                        Description: $('#carDesc').val()
+                    }),
+                    success: function(data) {
+                        window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                    }
+                });
+            });
+
     </script>
 }

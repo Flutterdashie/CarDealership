@@ -135,10 +135,62 @@
     <script type="text/javascript" src="~/Scripts/MakeModelMenu.js"></script>
     <script type="text/javascript">
         function DeleteVehicle(id) {
-            alert('deleted ' + id + ' but not actually');
             //Delete stuff here
+            $.ajax({
+                type: 'DELETE',
+                url: 'http://localhost:55792/api/admin/DeleteVehicle/' +id,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data) {
+                    window.location.href = 'http://localhost:55792/admin/Vehicles';
+                },
+                error: function(jqXHR) {
+                    alert(jqXHR.responseText);
+                }
+            });
         }
+
+
         $(document).ready(function() {
+            $('#editCar').on('submit',
+                function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:55792/api/admin/EditVehicle/' +$('#carID').val(),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        data: JSON.stringify({
+                            ID: $('#carID').val(),
+                            VIN: $('#carVIN').val(),
+                            Year: $('#carYear').val(),
+                            Body: $('#carBody').val(),
+                            Transmission: $('#carTrans').val(),
+                            Color: $('#carColor').val(),
+                            Interior: $('#carInterior').val(),
+                            Mileage: $('#carMileage').val(),
+                            MakeID: $('#carMake').val(),
+                            ModelID: $('#carModel').val(),
+                            SalePrice: $('#carSalePrice').val(),
+                            MSRP: $('#carMSRP').val(),
+                            Description: $('#carDesc').val(),
+                            IsFeatured: $('#isFeatured').prop('checked') ? 1 : 0
+                        }),
+                        success: function(data) {
+                            window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                        },
+                        error: function(jqXHR) {
+                            alert(jqXHR.responseText);
+                        }
+                    });
+                });
+
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:55792/api/admin/EditVehicle/' + @Model,
@@ -155,7 +207,11 @@
                     $('#carBody').val(data.Body);
                     $('#carTrans').val(data.Transmission);
                     $('#carColor').val(data.Color);
+                    $('#carInterior').val(data.Interior);
+                    $('#carMileage').val(data.Mileage);
                     $('#carVIN').val(data.VIN);
+                    $('#carSalePrice').val(data.SalePrice);
+                    $('#carMSRP').val(data.MSRP);
                     $('#carDesc').val(data.Description);
                     $('#isNew').attr('checked', data.IsNew === 1);
                     $('#isFeatured').attr('checked', data.IsFeatured === 1);

@@ -110,7 +110,7 @@ namespace CarDealership.Api_Controllers
             //    return BadRequest("Path/ID Mismatch");
             //}
 
-            return _dataSource.EditVehicle(editedVehicle) ? Ok() as IHttpActionResult : BadRequest();
+            return _dataSource.EditVehicle(editedVehicle) ? Ok(id) as IHttpActionResult : BadRequest("Something went wrong");
         }
 
         [Route("api/Admin/EditVehicle/{id}"), Authorize(Roles = "Admin"), HttpGet]
@@ -129,8 +129,7 @@ namespace CarDealership.Api_Controllers
         [Route("api/Admin/DeleteVehicle/{id}"), Authorize(Roles = "Admin"), HttpDelete]
         public IHttpActionResult DeleteVehicle(int id)
         {
-            _dataSource.DeleteVehicle(id);
-            return Ok();
+            return Ok(_dataSource.DeleteVehicle(id));
         }
 
         [Route("api/Admin/Users/{id}"), Authorize(Roles = "Admin"), HttpGet]

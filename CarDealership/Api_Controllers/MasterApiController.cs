@@ -20,6 +20,7 @@ namespace CarDealership.Api_Controllers
     {
         private static DataServices _dataSource = new DataServices();
 
+        #region Home
 
         [Route("api/Home/Index"), AllowAnonymous, HttpGet]
         public IHttpActionResult Index()
@@ -37,7 +38,7 @@ namespace CarDealership.Api_Controllers
         [Route("api/Home/Contact"), AllowAnonymous, HttpPost]
         public IHttpActionResult Contact([FromBody] Contact newContact)
         {
-            if(newContact == null)
+            if (newContact == null)
             {
                 return BadRequest("Could not parse from form.");
             }
@@ -51,7 +52,7 @@ namespace CarDealership.Api_Controllers
                 return BadRequest("Please enter a message.");
             }
 
-            if(string.IsNullOrWhiteSpace(newContact.Email) && string.IsNullOrWhiteSpace(newContact.Phone))
+            if (string.IsNullOrWhiteSpace(newContact.Email) && string.IsNullOrWhiteSpace(newContact.Phone))
             {
                 return BadRequest("Please provide a means of contact.");
             }
@@ -61,6 +62,9 @@ namespace CarDealership.Api_Controllers
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region Inventory
 
         [Route("api/Inventory/New"), AllowAnonymous, HttpGet, HttpPost]
         public IHttpActionResult New([FromBody] CarSearchFilters filters)
@@ -89,6 +93,10 @@ namespace CarDealership.Api_Controllers
         }
 
 
+        #endregion
+
+        #region Admin
+
         [Route("api/Admin/Vehicles"), Authorize(Roles = "Admin"), HttpGet, HttpPost]
         public IHttpActionResult Vehicles([FromBody] CarSearchFilters filters)
         {
@@ -102,13 +110,12 @@ namespace CarDealership.Api_Controllers
         }
 
         [Route("api/Admin/EditVehicle/{id}"), Authorize(Roles = "Admin"), HttpPost]
-        public IHttpActionResult EditVehicle(int id,[FromBody] JObject editedVehicle)
+        public IHttpActionResult EditVehicle(int id, [FromBody] JObject editedVehicle)
         {
-            // TODO: See if there's a safer way to include this
-            //if (id != (int) editedVehicle["ID"])
-            //{
-            //    return BadRequest("Path/ID Mismatch");
-            //}
+            if (!editedVehicle.ContainsKey("ID") || id != (int)editedVehicle["ID"])
+            {
+                return BadRequest("Path/ID Mismatch");
+            }
 
             return _dataSource.EditVehicle(editedVehicle) ? Ok(id) as IHttpActionResult : BadRequest("Something went wrong");
         }
@@ -147,7 +154,7 @@ namespace CarDealership.Api_Controllers
         [Route("api/Admin/Users"), Authorize(Roles = "Admin"), HttpPost]
         public IHttpActionResult AddUser([FromBody] JObject newUser)
         {
-            newUser.Add("UserID","Placeholder");
+            newUser.Add("UserID", "Placeholder");
             string response = _dataSource.AddUser(newUser);
             return (!response.Contains(" ")) ? Ok(response) as IHttpActionResult : BadRequest(response);
         }
@@ -250,6 +257,9 @@ namespace CarDealership.Api_Controllers
             }
         }
 
+        #endregion
+
+        #region Account
 
         [Route("api/Account/Login"), AllowAnonymous, HttpPost]
         public IHttpActionResult Login([FromBody] LoginAttempt model)
@@ -266,7 +276,8 @@ namespace CarDealership.Api_Controllers
             {
 
                 return BadRequest("Invalid username or password");
-            } else if(userManager.IsInRole(user.Id,"Disabled"))
+            }
+            else if (userManager.IsInRole(user.Id, "Disabled"))
             {
                 return BadRequest("User is disabled");
             }
@@ -307,14 +318,18 @@ namespace CarDealership.Api_Controllers
         }
 
 
+        #endregion
+
+        #region Reports
+
         [Route("api/Reports/Index"), Authorize(Roles = "Admin"), HttpGet]
         public IHttpActionResult ReportsIndex()
         {
             throw new NotImplementedException();
         }
 
-        [Route("api/Reports/Sales"), Authorize(Roles = "Admin"), HttpGet]
-        public IHttpActionResult ReportsSales()
+        [Route("api/Reports/Sales"), Authorize(Roles = "Admin"), HttpPost]
+        public IHttpActionResult ReportsSales([FromBody] JObject searchParams)
         {
             throw new NotImplementedException();
         }
@@ -324,6 +339,11 @@ namespace CarDealership.Api_Controllers
         {
             return Ok(_dataSource.GetInventoryReport());
         }
+
+
+        #endregion
+
+        #region Sales
 
         [Route("api/Sales/Index"), Authorize(Roles = "Sales"), HttpGet]
         public IHttpActionResult SalesIndex()
@@ -337,6 +357,33 @@ namespace CarDealership.Api_Controllers
             throw new NotImplementedException();
         }
 
+        [Route("Sales/Purchase/{id}"),Authorize(Roles = "Sales"),HttpPost]
+        public IHttpActionResult LogPurchase(int id, [FromBody] JObject saleInfo)
+        {
+            if (!saleInfo.ContainsKey("CarID") || id != (int)saleInfo["CarID"])
+            {
+                return BadRequest("Invalid or missing vehicle ID");
+            }
+
+            try
+            {
+                if ((int) _dataSource.GetVehicleByID(id)["IsPurchased"] != 0)
+                {
+                    return BadRequest("Car already purchased.");
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Car is nonexistent or inaccessible. Error message: " + e.Message);
+            }
+            
+            var authManager = HttpContext.Current.GetOwinContext().Authentication;
+            saleInfo.Add("SellerID",authManager.User.Identity.GetUserId());
+            saleInfo.Add("PurchaseDate",DateTime.Now.ToShortDateString());
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
     }
 }

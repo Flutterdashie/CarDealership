@@ -315,21 +315,5 @@ namespace CarDealership.Models
             return _repo.GetMakes().FirstOrDefault(m => m.MakeID == makeID);
         }
 
-        private class CarGrouping
-        {
-            public int Year;
-            public string Make;
-            public string Model;
-            public override bool Equals(object obj)
-            {
-                if (obj == null)
-                    return false;
-                if (!(obj is CarGrouping))
-                    return base.Equals(obj);
-                CarGrouping temp = (CarGrouping) obj;
-                return (temp.Year == this.Year) && (temp.Make == this.Make) && (temp.Model == this.Model);
-            }
-        }
-
     }
 }

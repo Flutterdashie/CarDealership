@@ -162,5 +162,13 @@ namespace CarDealership.Models.Repositories
             _database.Entry(_database.Specials.Find(id)).State = EntityState.Deleted;
             _database.SaveChanges();
         }
+
+        public Purchase AddPurchase(Purchase newPurchase)
+        {
+            Purchase output = _database.Purchases.Add(newPurchase);
+            _database.SaveChanges();
+            return output;
+        }
+
     }
 }

@@ -228,6 +228,19 @@ namespace CarDealership.Models
 
         #endregion
 
+        public Tuple<bool, string> PostPurchase(JObject newPurchase)
+        {
+
+            try
+            {
+
+                return new Tuple<bool, string>(true,"");
+            }
+            catch (Exception e)
+            {
+                return new Tuple<bool, string>(false,e.Message);
+            }
+        }
 
         #region JSONConverters
         private static JObject CarToJSON(Car input)
@@ -303,6 +316,36 @@ namespace CarDealership.Models
                 UserID = input["UserID"].ToString()
             };
         }
+
+        private static Purchase PurchaseFromJSON(JObject input)
+        {
+            int purchaseID = input.ContainsKey("PurchaseID") ? (int) input["PurchaseID"] : -1;
+            string phone = input.ContainsKey("Phone") ? input["Phone"].ToString() : null;
+            string email = input.ContainsKey("Email") ? input["Email"].ToString() : null;
+            string street2 = input.ContainsKey("Street2") ? input["Street2"].ToString() : null;
+            if (phone == null && email == null)
+            {
+                throw new ArgumentException("No contact information provided");
+            }
+            return new Purchase
+            {
+                PurchaseID = purchaseID,
+                CarID = (int) input["CarID"],
+                Phone = phone,
+                Email = email,
+                Street1 = input["Street1"].ToString(),
+                Street2 = street2,
+                City = input["City"].ToString(),
+                PurchaseState = input["PurchaseState"].ToString(),
+                Zipcode = input["Zipcode"].ToString(),
+                Price = (decimal)input["Price"],
+                PurchaseType = input["PurchaseType"].ToString(),
+                PurchaseDate = DateTime.Parse(input["PurchaseDate"].ToString()),
+                SellerID = input["SellerID"].ToString(),
+                Car = _repo.GetVehicleByID((int) input["CarID"])
+            };
+        }
+
         #endregion
 
         private static Model GetModel(int modelID)

@@ -377,9 +377,14 @@ namespace CarDealership.Api_Controllers
                 return BadRequest("Car is nonexistent or inaccessible. Error message: " + e.Message);
             }
             
+
+
             var authManager = HttpContext.Current.GetOwinContext().Authentication;
             saleInfo.Add("SellerID",authManager.User.Identity.GetUserId());
             saleInfo.Add("PurchaseDate",DateTime.Now.ToShortDateString());
+
+            var result = _dataSource.PostPurchase(saleInfo);
+            return (result.Item1) ? Ok("Success") as IHttpActionResult : BadRequest(result.Item2);
             throw new NotImplementedException();
         }
 

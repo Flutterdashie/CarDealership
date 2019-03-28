@@ -1,5 +1,5 @@
 ﻿$(document).ready(function() {
-    
+    $('#errorMessages').hide();
 });
 
 $('#searchForm').on('submit',

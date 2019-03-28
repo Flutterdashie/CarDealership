@@ -200,23 +200,31 @@ namespace CarDealership.Models
 
         public IEnumerable<IEnumerable<JObject>> GetInventoryReport()
         {
-            //TODO: There's got to be a way that I can compact this, both into 1 linq call and into one Jobject (or ienumerable thereof).
-            var newData = _repo.GetInventory(false).Where(c => c.IsNew).GroupBy(c => string.Join("$",c.CarYear.ToString(), c.Make.MakeName,c.Model.ModelName) ,c => c,(key, g) => new JObject
+            var newData = from car in _repo.GetInventory(false)
+                where car.IsNew
+                group car by new {year = car.CarYear, model = car.Model.ModelName, make = car.Make.MakeName}
+                into g
+                select new JObject
                 {
-                    {"Year", int.Parse(key.Split('$')[0])},
-                    {"MakeName" ,key.Split('$')[1]},
-                    {"ModelName", key.Split('$')[2]},
+                    {"Year", g.Key.year},
+                    {"MakeName", g.Key.make},
+                    {"ModelName", g.Key.model},
                     {"Count", g.Count()},
                     {"StockValue", g.Sum(c => c.MSRP)}
-                });
-            var usedData = _repo.GetInventory(false).Where(c => !c.IsNew).GroupBy(c => string.Join("$",c.CarYear.ToString(), c.Make.MakeName,c.Model.ModelName) ,c => c,(key, g) => new JObject
-            {
-                {"Year", int.Parse(key.Split('$')[0])},
-                {"MakeName" ,key.Split('$')[1]},
-                {"ModelName", key.Split('$')[2]},
-                {"Count", g.Count()},
-                {"StockValue", g.Sum(c => c.MSRP)}
-            });
+                };
+            //TODO: There's got to be a way that I can compact this, both into 1 linq call and into one Jobject (or ienumerable thereof).
+            var usedData = from car in _repo.GetInventory(false)
+                where !car.IsNew
+                group car by new {year = car.CarYear, model = car.Model.ModelName, make = car.Make.MakeName}
+                into g
+                select new JObject
+                {
+                    {"Year", g.Key.year},
+                    {"MakeName", g.Key.make},
+                    {"ModelName", g.Key.model},
+                    {"Count", g.Count()},
+                    {"StockValue", g.Sum(c => c.MSRP)}
+                };
             
             return new List<IEnumerable<JObject>>
             {
@@ -233,8 +241,8 @@ namespace CarDealership.Models
 
             try
             {
-
-                return new Tuple<bool, string>(true,"");
+                string result = "Purchase with ID " + _repo.AddPurchase(PurchaseFromJSON(newPurchase)).PurchaseID + " created.";
+                return new Tuple<bool, string>(true,result);
             }
             catch (Exception e)
             {

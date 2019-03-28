@@ -317,6 +317,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\EditVehicle.cshtml" />
     <Content Include="Views\Reports\Inventory.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Sales\Purchase.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -327,7 +329,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AllView\" />
-    <Folder Include="Views\Sales\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903201416351_init.resx">

@@ -20,6 +20,7 @@ namespace CarDealership.Controllers
         [Route("Sales/Purchase/{id}")]
         public ActionResult Purchase(int id)
         {
+            return View(id);
             throw new NotImplementedException();
         }
     }

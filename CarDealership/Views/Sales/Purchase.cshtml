@@ -1,0 +1,231 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Purchase";
+}
+
+<h2>Purchase Vehicle</h2>
+
+<div class="row border-dark" id="carData"></div>
+
+<form id="newPurchase">
+    <input type="hidden" id="carID"/>
+    <div class="row">
+
+        <div class="col-6 form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" required/>
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" class="form-control" id="phone"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="email">Name</label>
+            <input type="email" class="form-control" id="email"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="street1">Street 1</label>
+            <input type="text" class="form-control" id="street1" required/>
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="street2">Street 2</label>
+            <input type="text" class="form-control" id="street2"/>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-6 form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" required/>
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="state">State</label>
+            <select id="state" class="form-control" required>
+                <option value="AK">AK</option>
+                <option value="AL">AL</option>
+                <option value="AR">AR</option>
+                <option value="AZ">AZ</option>
+                <option value="CA">CA</option>
+                <option value="CO">CO</option>
+                <option value="CT">CT</option>
+                <option value="DC">DC</option>
+                <option value="DE">DE</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="HI">HI</option>
+                <option value="IA">IA</option>
+                <option value="ID">ID</option>
+                <option value="IL">IL</option>
+                <option value="IN">IN</option>
+                <option value="KS">KS</option>
+                <option value="KY">KY</option>
+                <option value="LA">LA</option>
+                <option value="MA">MA</option>
+                <option value="MD">MD</option>
+                <option value="ME">ME</option>
+                <option value="MI">MI</option>
+                <option value="MN">MN</option>
+                <option value="MO">MO</option>
+                <option value="MS">MS</option>
+                <option value="MT">MT</option>
+                <option value="NC">NC</option>
+                <option value="NE">NE</option>
+                <option value="NH">NH</option>
+                <option value="NJ">NJ</option>
+                <option value="NM">NM</option>
+                <option value="NV">NV</option>
+                <option value="NY">NY</option>
+                <option value="ND">ND</option>
+                <option value="OH">OH</option>
+                <option value="OK">OK</option>
+                <option value="OR">OR</option>
+                <option value="PA">PA</option>
+                <option value="RI">RI</option>
+                <option value="SC">SC</option>
+                <option value="SD">SD</option>
+                <option value="TN">TN</option>
+                <option value="TX">TX</option>
+                <option value="UT">UT</option>
+                <option value="VT">VT</option>
+                <option value="VA">VA</option>
+                <option value="WA">WA</option>
+                <option value="WI">WI</option>
+                <option value="WV">WV</option>
+                <option value="WY">WY</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="zipCode">Zipcode</label>
+            <input type="text" class="form-control" id="zipCode" pattern="\d{5}(-\d{4})?" title="Enter 5 digit postal code with optional -xxxx suffix" required/>
+        </div>
+    </div>
+    <hr/>
+
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="purchasePrice">Street 1</label>
+            <input type="number" class="form-control" id="purchasePrice" step="0.01" required/>
+        </div>
+
+        <div class="col-6 form-group">
+            <label for="purchaseType">Street 2</label>
+            <select class="form-control" id="purchaseType" required>
+                <option value="Bank Finance">Bank Finance</option>
+                <option value="Cash">Cash</option>
+                <option value="Dealer Finance">Dealer Finance</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit">Save</button>
+    </div>
+</form>
+
+@section scripts
+{
+    <script type="text/javascript">
+        var isDisabled = false;
+        function Lockdown() {
+            $('select').attr('disabled', true);
+            $('input').attr('disabled', true);
+            $('button').attr('disabled', true);
+            isDisabled = true;
+        }
+
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/Sales/Purchase/' + @Model,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data, status) {
+                    var row = '<div class="col-12"><table><tr><th>' +
+                        data.Year +
+                        ' ' +
+                        data.Make +
+                        ' ' +
+                        data.Model +
+                        '</th></tr>';
+                    row += '<tr><td>Body Style: ' +
+                        data.Body +
+                        '</td><td>Interior: ' +
+                        data.Interior +
+                        '</td><td>Sale Price: ' +
+                        data.SalePrice +
+                        '</td></tr>';
+                    row += '<tr><td>Trans: ' +
+                        data.Transmission +
+                        '</td><td>Mileage: ' +
+                        data.Mileage +
+                        '</td><td>MSRP: ' +
+                        data.MSRP +
+                        '</td></tr>';
+                    row += '<tr><td>Color: ' + data.Color + '</td><td>VIN: ' + data.VIN + '</td><td>' + '</td></tr>';
+                    row += '<tr><td colspan="3">Description: ' + data.Description + '</td></tr></div>';
+                    $('#carID').val(data.ID);
+                    $('#carData').clear();
+                    $('#carData').append(row);
+                    if (data.IsPurchased === 1) {
+                        alert('This car has already been purchased.');
+                        Lockdown();
+                    }
+                    if (data.ID !== @Model) {
+                        alert('Car ID mismatched page url. Please contact support.');
+                        Lockdown();
+                    }
+                },
+                error: function(jqXHR) {
+                    alert('Could not get car data for purchase. Message: ' + jqXHR.responseText);
+                    Lockdown();
+                }
+            });
+
+            $('#newPurchase').on('submit',
+                function(event) {
+                    if (isDisabled) {
+                        return;
+                    }
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://localhost:55792/api/Sales/Purchase/' + @Model,
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        data: JSON.stringify({
+                            CarID: $('#carID').val(),
+                            Phone: $('#phone').val(),
+                            Email: $('#email').val(),
+                            Street1: $('#street1').val(),
+                            Street2: $('#street2').val(),
+                            City: $('#city').val(),
+                            PurchaseState: $('#state').val(),
+                            Zipcode: $('#zipCode').val(),
+                            Price: $('#purchasePrice').val(),
+                            PurchaseType: $('#purchaseType').val()
+                        })
+                    });
+                });
+        });
+    </script>
+
+}

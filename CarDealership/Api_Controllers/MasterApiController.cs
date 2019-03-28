@@ -317,6 +317,13 @@ namespace CarDealership.Api_Controllers
             return Ok(authManager.User.Identity.GetUserName());
         }
 
+        [Route("api/Account/Logout"), Authorize, HttpGet]
+        public IHttpActionResult Logout()
+        {
+            HttpContext.Current.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return Ok("Logged out.");
+        }
+
 
         #endregion
 
@@ -354,7 +361,15 @@ namespace CarDealership.Api_Controllers
         [Route("Sales/Purchase/{id}"), Authorize(Roles = "Sales"), HttpGet]
         public IHttpActionResult Purchase(int id)
         {
-            throw new NotImplementedException();
+            //Yes, this is the exact same as Inventory/Details
+            try
+            {
+                return Ok(_dataSource.GetVehicleByID(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [Route("Sales/Purchase/{id}"),Authorize(Roles = "Sales"),HttpPost]
@@ -384,7 +399,7 @@ namespace CarDealership.Api_Controllers
             saleInfo.Add("PurchaseDate",DateTime.Now.ToShortDateString());
 
             var result = _dataSource.PostPurchase(saleInfo);
-            return (result.Item1) ? Ok("Success") as IHttpActionResult : BadRequest(result.Item2);
+            return (result.Item1) ? Ok("Success: " + result.Item2) as IHttpActionResult : BadRequest(result.Item2);
             throw new NotImplementedException();
         }
 

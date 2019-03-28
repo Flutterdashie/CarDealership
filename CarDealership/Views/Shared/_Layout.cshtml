@@ -8,26 +8,30 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar">
         <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("New","New","Inventory")</li>
-                <li>@Html.ActionLink("Used","Used","Inventory")</li>
-                @if (this.Context.User.IsInRole("Admin"))
-                {
-                    <li>@Html.ActionLink("Users", "Users", "Admin")</li>
-                    <li>@Html.ActionLink("Makes", "Makes", "Admin")</li>
-                    <li>@Html.ActionLink("Models", "Models", "Admin")</li>
-                    <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
-                }
-                @if (Context.User.IsInRole("Sales"))
-                {
-                    <li>@Html.ActionLink("Sales", "Index", "Sales")</li>
-                }
-            </ul>
+            @Html.ActionLink("Car Dealership", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("New", "New", "Inventory",null,new {@class = "nav-tabs"})
+            @Html.ActionLink("Used", "Used", "Inventory", null, new { @class = "nav-tabs" })
+            @if (this.Context.User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Users", "Users", "Admin", null, new { @class = "nav-tabs" })
+                @Html.ActionLink("Makes", "Makes", "Admin", null, new { @class = "nav-tabs" })
+                @Html.ActionLink("Models", "Models", "Admin", null, new { @class = "nav-tabs" })
+                @Html.ActionLink("Reports", "Index", "Reports", null, new { @class = "nav-tabs" })
+            }
+            @if (Context.User.IsInRole("Sales"))
+            {
+                <div class="nav-tabs">@Html.ActionLink("Sales", "Index", "Sales")</div>
+            }
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <a href="/api/Account/Logout">
+                    <div class="nav-tabs">
+                        Logout
+                    </div>
+                </a>
+            }
         </div>
     </div>
 

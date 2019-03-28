@@ -13,8 +13,8 @@ namespace CarDealership.Controllers
         [Route("Reports/Index")]
         public ActionResult Index()
         {
+            return View();
             throw new NotImplementedException();
-            //return View();
         }
 
         [Route("Reports/Sales")]
@@ -27,7 +27,6 @@ namespace CarDealership.Controllers
         public ActionResult Inventory()
         {
             return View();
-            throw new NotImplementedException();
         }
     }
 }

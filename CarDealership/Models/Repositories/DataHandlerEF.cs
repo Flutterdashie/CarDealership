@@ -118,6 +118,8 @@ namespace CarDealership.Models.Repositories
                         };
                         car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
                         car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);
+                        // ReSharper disable once PossibleNullReferenceException
+                        car.Purchases = _database.Cars.Find(id).Purchases;
                         conn.Close();
                         return car;
                     }

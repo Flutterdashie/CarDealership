@@ -56,6 +56,7 @@
           </Key>
           <Property Name="PurchaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CarID" Type="int" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="15" />
           <Property Name="Email" Type="varchar" MaxLength="40" />
           <Property Name="Street1" Type="varchar" MaxLength="50" Nullable="false" />
@@ -215,6 +216,7 @@
           <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SellerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Car" Relationship="Self.fk_Purchases_Cars" FromRole="Purchases" ToRole="Cars" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Special">
           <Key>
@@ -294,7 +296,7 @@
             <End Role="Model" EntitySet="Models" />
           </AssociationSet>
           <FunctionImport Name="DeleteByID">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <Association Name="fk_Models_Makes">
@@ -356,6 +358,7 @@
           <EntitySetMapping Name="Purchases">
             <EntityTypeMapping TypeName="CarDealershipModel.Purchase">
               <MappingFragment StoreEntitySet="Purchases">
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
                 <ScalarProperty Name="CarID" ColumnName="CarID" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />

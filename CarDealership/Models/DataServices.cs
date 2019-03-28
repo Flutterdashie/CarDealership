@@ -350,7 +350,7 @@ namespace CarDealership.Models
                 PurchaseType = input["PurchaseType"].ToString(),
                 PurchaseDate = DateTime.Parse(input["PurchaseDate"].ToString()),
                 SellerID = input["SellerID"].ToString(),
-                Car = _repo.GetVehicleByID((int) input["CarID"])
+                CustomerName = input["CustomerName"].ToString()
             };
         }
 

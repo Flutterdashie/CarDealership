@@ -25,7 +25,7 @@
 
     <div class="row">
         <div class="col-6 form-group">
-            <label for="email">Name</label>
+            <label for="email">Email</label>
             <input type="email" class="form-control" id="email"/>
         </div>
     </div>
@@ -117,12 +117,12 @@
 
     <div class="row">
         <div class="col-6 form-group">
-            <label for="purchasePrice">Street 1</label>
+            <label for="purchasePrice">Purchase Price</label>
             <input type="number" class="form-control" id="purchasePrice" step="0.01" required/>
         </div>
 
         <div class="col-6 form-group">
-            <label for="purchaseType">Street 2</label>
+            <label for="purchaseType">Purchase Type</label>
             <select class="form-control" id="purchaseType" required>
                 <option value="Bank Finance">Bank Finance</option>
                 <option value="Cash">Cash</option>
@@ -221,8 +221,13 @@
                             PurchaseState: $('#state').val(),
                             Zipcode: $('#zipCode').val(),
                             Price: $('#purchasePrice').val(),
-                            PurchaseType: $('#purchaseType').val()
-                        })
+                            PurchaseType: $('#purchaseType').val(),
+                            CustomerName: $('#name').val()
+                        }),
+                        success: function(data, status) {
+                            alert(data.responseText);
+                            window.location.href = '/Sales/Index';
+                        }
                     });
                 });
         });

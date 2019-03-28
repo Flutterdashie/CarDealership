@@ -27,6 +27,7 @@ namespace CarDealership.Models.DataModels
         public string PurchaseType { get; set; }
         public System.DateTime PurchaseDate { get; set; }
         public string SellerID { get; set; }
+        public string CustomerName { get; set; }
     
         public virtual Car Car { get; set; }
     }

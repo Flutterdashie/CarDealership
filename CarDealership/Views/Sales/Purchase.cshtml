@@ -179,7 +179,7 @@
                     row += '<tr><td>Color: ' + data.Color + '</td><td>VIN: ' + data.VIN + '</td><td>' + '</td></tr>';
                     row += '<tr><td colspan="3">Description: ' + data.Description + '</td></tr></div>';
                     $('#carID').val(data.ID);
-                    $('#carData').clear();
+                    $('#carData').empty();
                     $('#carData').append(row);
                     if (data.IsPurchased === 1) {
                         alert('This car has already been purchased.');

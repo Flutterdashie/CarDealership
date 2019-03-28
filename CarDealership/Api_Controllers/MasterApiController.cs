@@ -358,7 +358,7 @@ namespace CarDealership.Api_Controllers
             throw new NotImplementedException();
         }
 
-        [Route("Sales/Purchase/{id}"), Authorize(Roles = "Sales"), HttpGet]
+        [Route("api/Sales/Purchase/{id}"), Authorize(Roles = "Sales"), HttpGet]
         public IHttpActionResult Purchase(int id)
         {
             //Yes, this is the exact same as Inventory/Details
@@ -372,7 +372,7 @@ namespace CarDealership.Api_Controllers
             }
         }
 
-        [Route("Sales/Purchase/{id}"),Authorize(Roles = "Sales"),HttpPost]
+        [Route("api/Sales/Purchase/{id}"),Authorize(Roles = "Sales"),HttpPost]
         public IHttpActionResult LogPurchase(int id, [FromBody] JObject saleInfo)
         {
             if (!saleInfo.ContainsKey("CarID") || id != (int)saleInfo["CarID"])

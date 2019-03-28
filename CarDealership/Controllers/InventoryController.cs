@@ -27,9 +27,7 @@ namespace CarDealership.Controllers
         [Route("Inventory/Details/{id}")]
         public ActionResult Details(int id)
         {
-            //TODO: Make this not cheat
-            ViewBag.CarID = id;
-            return View();
+            return View(id);
             throw new NotImplementedException();
         }
     }

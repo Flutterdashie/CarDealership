@@ -1,7 +1,85 @@
-﻿
+﻿@model int
+
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Vehicle Details</h2>
 
+<div class="row border-dark">
+    <div class="col-3">
+        <h5 id="makeModelYear"></h5>
+        <img alt="there might be a picture here someday"/>
+    </div>
+    <div class="col-9">
+        <table>
+            <tr>
+                <th>Body Style:</th>
+                <td id="bodyStyle"></td>
+                <th>Interior: </th>
+                <td id="interior"></td>
+                <th>Sale Price:</th>
+                <td id="salePrice"></td>
+            </tr>
+            <tr>
+                <th>Trans:</th>
+                <td id="transmission"></td>
+                <th>Mileage: </th>
+                <td id="mileage"></td>
+                <th>MSRP: </th>
+                <td id="msrp"></td>
+            </tr>
+            <tr>
+                <th>Color: </th>
+                <td id="color"></td>
+                <th>VIN: </th>
+                <td id="vin"></td>
+            </tr>
+            <tr>
+                <th>Description: </th>
+                <td colspan="5" id="description"></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <td id="carButton"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/Inventory/Details/' + @Model,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data, status) {
+                    $('#makeModelYear').text(data.Year + ' ' + data.Make + ' ' + data.Model);
+                    $('#bodyStyle').text(data.Body);
+                    $('#interior').text(data.Interior);
+                    $('#salePrice').text('$' + data.SalePrice);
+                    $('#transmission').text(data.Transmission);
+                    $('#mileage').text((data.IsNew === 1) ? 'New' : data.Mileage);
+                    $('#msrp').text('$' + data.MSRP);
+                    $('#color').text(data.Color);
+                    $('#vin').text(data.VIN);
+                    $('#description').text(data.Description);
+                    var button = '';
+                    if (data.IsPurchased === 0) {
+                        button = 'Finish setting up the contact button, please';
+                    } else {
+                        button = '<button type="button" class="btn btn-primary" disabled>Unavailable- Sold</button>';
+                    }
+                    $('#carButton').append(button);
+                },
+                error: function(jqXHR) {
+                    alert('Could not get car data. Message: ' + jqXHR.responseText);
+                }
+            });
+        });
+        </script>
+    }

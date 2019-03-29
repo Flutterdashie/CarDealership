@@ -14,7 +14,6 @@ namespace CarDealership.Controllers
         public ActionResult Index()
         {
             return View();
-            throw new NotImplementedException();
         }
 
         [Route("Reports/Sales")]

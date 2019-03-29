@@ -319,6 +319,7 @@
     <Content Include="Views\Reports\Inventory.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Sales\Purchase.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

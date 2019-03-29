@@ -352,9 +352,10 @@ namespace CarDealership.Api_Controllers
 
         #region Sales
 
-        [Route("api/Sales/Index"), Authorize(Roles = "Sales"), HttpGet]
-        public IHttpActionResult SalesIndex()
+        [Route("api/Sales/Index"), Authorize(Roles = "Sales"), HttpPost]
+        public IHttpActionResult SalesIndex([FromBody] CarSearchFilters filters)
         {
+            return Ok(_dataSource.GetVehicles(filters, RoleType.Sales));
             throw new NotImplementedException();
         }
 

@@ -1,11 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Vehicles";
+    ViewBag.Title = "Index";
 }
 
-<h2>Vehicles</h2>
+<h2>Index</h2>
+
 <form id="searchForm" class="form-inline">
-    <input type="hidden" value="@ViewBag.Title.ToString()" id="searchType" />
+    <input type="hidden" id="searchType" value="Index" />
     <div class="form-group">
         <input type="text" id="makeModelYear" placeholder="Make, Model, or Year" name="makeModelYear" />
     </div>
@@ -26,12 +27,11 @@
 
 <div id="vehicleList"></div>
 
-
-
-@section scripts {
+@section scripts
+{   
     <script type="text/javascript">
         function Activate(id) {
-            window.location.href = "/Admin/EditVehicle/" + id;
+            window.location.href = "/Sales/Purchase/" + id;
         }
     </script>
     <script src="~/Scripts/SearchHandler.js"></script>

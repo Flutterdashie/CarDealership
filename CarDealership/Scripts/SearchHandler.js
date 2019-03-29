@@ -1,4 +1,4 @@
-﻿$(document).ready(function() {
+﻿$(document).ready(function () {
     $('#errorMessages').hide();
 });
 
@@ -10,8 +10,8 @@ $('#searchForm').on('submit',
         var urlString = 'http://localhost:55792/api/';
         var buttonLabel = '';
         switch ($('#searchType').val()) {
-        //These are all based on page title
-        case 'Vehicles':
+            //These are all based on page title
+            case 'Vehicles':
                 urlString += 'Admin/Vehicles';
                 buttonLabel = 'Edit';
                 break;
@@ -22,6 +22,10 @@ $('#searchForm').on('submit',
             case 'Used':
                 urlString += 'Inventory/Used';
                 buttonLabel = 'Details';
+                break;
+            case 'Index':
+                urlString += 'Sales/Index';
+                buttonLabel = 'Purchase';
                 break;
             default:
                 alert('Invalid page setup. Please refresh the page and try again.');
@@ -49,9 +53,9 @@ $('#searchForm').on('submit',
                     var detailsLink = '<button class="btn btn-primary" onclick="Activate(';
                     detailsLink += item.ID + ')">' + buttonLabel + '</button>';
                     var row = '<div><table><tr><th>' + item.Year + ' ' + item.Make + ' ' + item.Model + '</th></tr>';
-                    row += '<tr><td>Body Style: ' + item.Body + '</td><td>Interior: '+ item.Interior+'</td><td>Sale Price: '+item.SalePrice +'</td></tr>';
+                    row += '<tr><td>Body Style: ' + item.Body + '</td><td>Interior: ' + item.Interior + '</td><td>Sale Price: ' + item.SalePrice + '</td></tr>';
                     row += '<tr><td>Trans: ' + item.Transmission + '</td><td>Mileage: ' + item.Mileage + '</td><td>MSRP: ' + item.MSRP + '</td></tr>';
-                    row += '<tr><td>Color: ' +item.Color + '</td><td>VIN: ' + item.VIN + '</td><td>' + detailsLink + '</td></tr></div>';
+                    row += '<tr><td>Color: ' + item.Color + '</td><td>VIN: ' + item.VIN + '</td><td>' + detailsLink + '</td></tr></div>';
                     $('#vehicleList').append(row);
                 });
                 $('#errorMessages').hide();
@@ -62,7 +66,3 @@ $('#searchForm').on('submit',
             }
         });
     });
-
-function Activate(id) {
-    alert('You activated vehicle ' + id + '\'s trap card!');
-}

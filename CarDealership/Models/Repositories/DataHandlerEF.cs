@@ -172,5 +172,9 @@ namespace CarDealership.Models.Repositories
             return output;
         }
 
+        public IEnumerable<Purchase> GetPurchases()
+        {
+            return _database.Purchases;
+        }
     }
 }

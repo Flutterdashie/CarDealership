@@ -143,11 +143,13 @@ namespace CarDealership.Models
             return _repo.AddModel(newModel["ModelName"].ToString(), (int) newModel["MakeID"]).ModelID;
         }
 
+        #region Specials
+
         public int AddSpecial(JObject newSpecial)
         {
             try
             {
-            return _repo.AddSpecial(newSpecial["Title"].ToString(), newSpecial["Description"].ToString()).SpecialID;
+                return _repo.AddSpecial(newSpecial["Title"].ToString(), newSpecial["Description"].ToString()).SpecialID;
 
             }
             catch (Exception)
@@ -185,6 +187,8 @@ namespace CarDealership.Models
                 {"Description", special.SpecialDescription}
             });
         }
+
+        #endregion
 
         public IEnumerable<JObject> GetFeatured()
         {
@@ -234,6 +238,27 @@ namespace CarDealership.Models
             
         }
 
+        public IEnumerable<JObject> GetSalesReport(string userID, DateTime startDate, DateTime endDate)
+        {
+            return from purchase in _repo.GetPurchases()
+                where purchase.PurchaseDate >= startDate && purchase.PurchaseDate <= endDate
+                where !string.IsNullOrWhiteSpace(userID) || purchase.SellerID == userID
+                group purchase by purchase.SellerID
+                into p
+                select new JObject
+                {
+                    {"Name", GetFirstLast(userID)},
+                    {"TotalSales", $"{p.Sum(i => i.Price):C0}"},
+                    {"TotalVehicles", p.Count()}
+                };
+        }
+
+        private static string GetFirstLast(string userID)
+        {
+            UserView temp = _secRepo.GetUser(userID);
+            return (temp?.FirstName ?? "Unknown") + " "+ (temp?.LastName ?? userID.Take(4));
+        }
+
         #endregion
 
         public Tuple<bool, string> PostPurchase(JObject newPurchase)
@@ -249,6 +274,8 @@ namespace CarDealership.Models
                 return new Tuple<bool, string>(false,e.Message);
             }
         }
+
+
 
         #region JSONConverters
         private static JObject CarToJSON(Car input)

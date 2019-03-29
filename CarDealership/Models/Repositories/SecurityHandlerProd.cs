@@ -130,7 +130,7 @@ namespace CarDealership.Models.Repositories
                     }
                 }
 
-                return new UserView();
+                return null;
             }
         }
     }

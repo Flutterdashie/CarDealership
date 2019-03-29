@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.SqlServer.Server;
 
 namespace CarDealership.Api_Controllers
 {
@@ -329,16 +330,31 @@ namespace CarDealership.Api_Controllers
 
         #region Reports
 
-        [Route("api/Reports/Index"), Authorize(Roles = "Admin"), HttpGet]
-        public IHttpActionResult ReportsIndex()
-        {
-            throw new NotImplementedException();
-        }
-
         [Route("api/Reports/Sales"), Authorize(Roles = "Admin"), HttpPost]
         public IHttpActionResult ReportsSales([FromBody] JObject searchParams)
         {
-            throw new NotImplementedException();
+            try
+            {
+                searchParams = searchParams ?? new JObject();
+                string userID = searchParams.ContainsKey("User") && !string.IsNullOrWhiteSpace(searchParams["User"].ToString())
+                    ? searchParams["User"].ToString()
+                    : null;
+
+                string startStr = searchParams.ContainsKey("Start") && !string.IsNullOrWhiteSpace(searchParams["Start"].ToString())
+                    ? searchParams["Start"].ToString()
+                    : null;
+
+                string endStr = searchParams.ContainsKey("End") && !string.IsNullOrWhiteSpace(searchParams["End"].ToString())
+                    ? searchParams["End"].ToString()
+                    : null;
+                DateTime startDate = DateTime.Parse(startStr ?? "01/01/0001");
+                DateTime endDate = DateTime.Parse(endStr ?? (DateTime.Now + TimeSpan.FromDays(1)).ToShortDateString());
+                return Ok(_dataSource.GetSalesReport(userID, startDate, endDate));
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Sales report failed. Message: " + e.Message);
+            }
         }
 
         [Route("api/Reports/Inventory"), Authorize(Roles = "Admin"), HttpGet]
@@ -356,7 +372,6 @@ namespace CarDealership.Api_Controllers
         public IHttpActionResult SalesIndex([FromBody] CarSearchFilters filters)
         {
             return Ok(_dataSource.GetVehicles(filters, RoleType.Sales));
-            throw new NotImplementedException();
         }
 
         [Route("api/Sales/Purchase/{id}"), Authorize(Roles = "Sales"), HttpGet]
@@ -401,7 +416,6 @@ namespace CarDealership.Api_Controllers
 
             var result = _dataSource.PostPurchase(saleInfo);
             return (result.Item1) ? Ok("Success: " + result.Item2) as IHttpActionResult : BadRequest(result.Item2);
-            throw new NotImplementedException();
         }
 
         #endregion

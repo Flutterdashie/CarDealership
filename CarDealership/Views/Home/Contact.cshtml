@@ -1,0 +1,31 @@
+﻿@{
+    //That url thing is a HUGE mess that I probably shouldn't be doing. I'll look into it later.
+    ViewBag.Title = "Contact Us";
+}
+
+<h2>Contact Us</h2>
+
+<form action="/api/Home/Contact" method="post">
+
+    <div class="form-group">
+        <label for="ContactName">Name</label>
+        <input type="text" name="ContactName" id="ContactName" class="form-control" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" name="Email" id="Email" class="form-control"/>
+    </div>
+    
+    <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="tel" name="Phone" id="Phone" class="form-control"/>
+    </div>
+    
+    <div class="form-group">
+        <label for="ContactMsg">Message</label>
+        <textarea name="ContactMsg" class="form-control" id="ContactMsg" required>@Request.RawUrl.Split('/').Last().Replace("Contact",null)</textarea>
+    </div>
+    
+    <button type="submit" class="form-control">Submit</button>
+</form>

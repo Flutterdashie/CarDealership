@@ -21,10 +21,17 @@ namespace CarDealership.Controllers
             throw new NotImplementedException();
         }
 
+        //public ActionResult Contact()
+        //{
+        //    return View();
+        //}
+
         [Route("Home/Contact")]
-        public ActionResult Contact()
+        [Route("Home/Contact/{vin}")]
+        public ActionResult Contact(string vin)
         {
-            throw new NotImplementedException();
+            Object model = vin;
+            return View(model);
         }
     }
 }

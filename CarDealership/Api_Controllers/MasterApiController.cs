@@ -13,7 +13,6 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Microsoft.SqlServer.Server;
 
 namespace CarDealership.Api_Controllers
 {
@@ -37,30 +36,40 @@ namespace CarDealership.Api_Controllers
         }
 
         [Route("api/Home/Contact"), AllowAnonymous, HttpPost]
-        public IHttpActionResult Contact([FromBody] Contact newContact)
+        public IHttpActionResult Contact([FromBody] JObject newContact)
         {
+            //TODO: This is a mess, probably could be cleaned up
             if (newContact == null)
             {
                 return BadRequest("Could not parse from form.");
             }
-            if (string.IsNullOrWhiteSpace(newContact.ContactName))
+            if (!newContact.ContainsKey("ContactName") || string.IsNullOrWhiteSpace(newContact["ContactName"].ToString()))
             {
                 return BadRequest("Please enter your name.");
             }
 
-            if (string.IsNullOrWhiteSpace(newContact.ContactMessage))
+            if (!newContact.ContainsKey("ContactMsg") || string.IsNullOrWhiteSpace(newContact["ContactMsg"].ToString()))
             {
                 return BadRequest("Please enter a message.");
             }
 
-            if (string.IsNullOrWhiteSpace(newContact.Email) && string.IsNullOrWhiteSpace(newContact.Phone))
+            if(!newContact.ContainsKey("Email"))
+            {
+                newContact.Add("Email",string.Empty);
+            }
+
+            if(!newContact.ContainsKey("Phone"))
+            {
+                newContact.Add("Phone",string.Empty);
+            }
+
+            if (string.IsNullOrWhiteSpace(newContact["Email"].ToString()) && string.IsNullOrWhiteSpace(newContact["Phone"].ToString()))
             {
                 return BadRequest("Please provide a means of contact.");
             }
 
-            newContact.ContactID = 0;
-            //TODO: Store new contact object
-            throw new NotImplementedException();
+            Tuple<bool, string> result = _dataSource.PostContact(newContact);
+            return (result.Item1) ? Ok("Success: " + result.Item2) as IHttpActionResult : BadRequest(result.Item2);
         }
 
         #endregion

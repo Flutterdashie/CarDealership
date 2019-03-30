@@ -321,6 +321,7 @@
     <Content Include="Views\Sales\Purchase.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Reports\Sales.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -330,7 +331,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\AllView\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903201416351_init.resx">

@@ -49,6 +49,10 @@
 
 @section scripts {
     <script type="text/javascript">
+        function Contact(vin) {
+            window.location.href = '/Home/Contact/' + vin;
+        }
+
         $(document).ready(function() {
             $.ajax({
                 type: 'GET',
@@ -70,7 +74,7 @@
                     $('#description').text(data.Description);
                     var button = '';
                     if (data.IsPurchased === 0) {
-                        button = 'Finish setting up the contact button, please';
+                        button = '<button type="button" class="btn btn-primary" onclick="Contact(\'' + data.VIN + '\')">Contact Us</button>';
                     } else {
                         button = '<button type="button" class="btn btn-primary" disabled>Unavailable- Sold</button>';
                     }
@@ -81,5 +85,5 @@
                 }
             });
         });
-        </script>
+    </script>
     }

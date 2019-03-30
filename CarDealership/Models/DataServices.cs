@@ -275,7 +275,28 @@ namespace CarDealership.Models
             }
         }
 
+        public Tuple<bool, string> PostContact(JObject newContact)
+        {
+            try
+            {
+                string contactName = newContact["ContactName"].ToString();
+                string contactMsg = newContact["ContactMsg"].ToString();
+                string email = newContact["Email"].ToString();
+                string phone = newContact["Phone"].ToString();
+                if (string.IsNullOrWhiteSpace(email) &&
+                    string.IsNullOrWhiteSpace(phone))
+                {
+                    throw new Exception("At least one contact method field must be filled out.");
+                }
 
+            string result = "Contact with ID " + _repo.AddContact(contactName,contactMsg,email,phone).ContactID + " created.";
+                return new Tuple<bool, string>(true,result);
+            }
+            catch (Exception e)
+            {
+                return new Tuple<bool, string>(false,e.Message);
+            }
+        }
 
         #region JSONConverters
         private static JObject CarToJSON(Car input)

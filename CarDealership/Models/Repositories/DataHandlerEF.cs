@@ -176,5 +176,18 @@ namespace CarDealership.Models.Repositories
         {
             return _database.Purchases;
         }
+
+        public Contact AddContact(string contactName, string contactMsg, string email, string phone)
+        {
+            //TODO: Test this
+            Contact newContact = _database.Contacts.Create();
+            newContact.ContactName = contactName;
+            newContact.ContactMessage = contactMsg;
+            newContact.Email = email;
+            newContact.Phone = phone;
+            Contact output = _database.Contacts.Add(newContact);
+            _database.SaveChanges();
+            return output;
+        }
     }
 }

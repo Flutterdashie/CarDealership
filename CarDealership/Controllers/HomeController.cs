@@ -18,13 +18,8 @@ namespace CarDealership.Controllers
         [Route("Home/Specials")]
         public ActionResult Specials()
         {
-            throw new NotImplementedException();
+            return View();
         }
-
-        //public ActionResult Contact()
-        //{
-        //    return View();
-        //}
 
         [Route("Home/Contact")]
         [Route("Home/Contact/{vin}")]

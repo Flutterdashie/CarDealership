@@ -28,7 +28,6 @@ namespace CarDealership.Controllers
         public ActionResult Details(int id)
         {
             return View(id);
-            throw new NotImplementedException();
         }
     }
 }

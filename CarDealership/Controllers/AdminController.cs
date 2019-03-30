@@ -77,7 +77,6 @@ namespace CarDealership.Controllers
         public ActionResult AdminSpecials()
         {
             return View();
-            throw new NotImplementedException();
         }
     }
 }

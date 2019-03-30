@@ -13,16 +13,13 @@ namespace CarDealership.Controllers
         [Route("Sales/Index")]
         public ActionResult Index()
         {
-            //TODO: AJAX
             return View();
-            throw new NotImplementedException();
         }
 
         [Route("Sales/Purchase/{id}")]
         public ActionResult Purchase(int id)
         {
             return View(id);
-            throw new NotImplementedException();
         }
     }
 }

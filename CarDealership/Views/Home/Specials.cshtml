@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Specials";
+}
+
+<h2>Specials</h2>
+
+<div id="specialList"></div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:55792/api/home/specials/',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    $('#specialList').empty();
+                    $.each(data,
+                        function (index, item) {
+                            var row = '<div class="row border"><div class="col-2 text-center"><h1 style="font-size:400%">$</h1></div><div class="col-10"><h3>' + item.Title + '</h3><br/>';
+                            row += '<p>' + item.Description + '</p></div></div>';
+                            $('#specialList').append(row);
+                        });
+                },
+                error: function (jqXHR) {
+                    alert('Could not get specials. Error: ' + jqXHR.responseText);
+                }
+            });
+        })
+    </script>
+}
+

@@ -372,6 +372,18 @@ namespace CarDealership.Api_Controllers
             return Ok(_dataSource.GetInventoryReport());
         }
 
+        [Route("api/Reports/Sales/GetUsers"), Authorize(Roles = "Admin"), HttpGet]
+        public IHttpActionResult GetSalesUsers()
+        {
+            try
+            {
+                return Ok(_dataSource.GetSalesUsers());
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Could not get users. Sorry, better luck next time. Message: " + e.Message);
+            }
+        }
 
         #endregion
 

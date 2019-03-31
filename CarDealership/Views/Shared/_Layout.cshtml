@@ -16,6 +16,7 @@
             @if (this.Context.User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Users", "Users", "Admin", null, new { @class = "nav-tabs" })
+                @Html.ActionLink("Vehicles", "Vehicles", "Admin", null, new { @class = "nav-tabs" })
                 @Html.ActionLink("Makes", "Makes", "Admin", null, new { @class = "nav-tabs" })
                 @Html.ActionLink("Models", "Models", "Admin", null, new { @class = "nav-tabs" })
                 @Html.ActionLink("Reports", "Index", "Reports", null, new { @class = "nav-tabs" })

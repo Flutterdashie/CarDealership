@@ -4,7 +4,9 @@
 }
 
 <h2>Sales Report</h2>
-
+<div class="alert alert-danger" role="alert" id="errorMessages">
+    Validation Messages here
+</div>
 <form id="salesSearch">
     <div class="form-group">
         <label for="user">User </label>
@@ -22,3 +24,79 @@
     </div>
     <button type="submit" class="btn btn-primary form-control">Search</button>
 </form>
+
+<table class="table-bordered table-striped">
+    <thead><tr>
+        <th>Name or ID Segment</th>
+        <th>Total Sales</th>
+        <th>Total Vehicles</th>
+    </tr></thead>
+    <tbody id="salesTable"></tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#errorMessages').hide();
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/reports/sales/getusers',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function(data, status) {
+                    $('#errorMessages').hide();
+                    $.each(data,
+                        function(index, item) {
+                            var selectOption = '<option value="' + item.ID + '">' + item.FullName + '</option>';
+                            $('#user').append(selectOption);
+                        });
+                },
+                error: function (xHR) {
+                    $('#errorMessages').text(xHR.responseText);
+                    $('#errorMessages').show();
+                }
+            });
+            
+            $('#salesSearch').on('submit',
+                function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/reports/sales',
+                        data: JSON.stringify({
+                            User: $('#user').val(),
+                            Start: $('#fromDate').val(),
+                            End: $('#toDate').val()
+                        }),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        'dataType': 'json',
+                        success: function (data, status) {
+                            $('#salesTable').text('');
+                            $.each(data, function (index, item) {
+                                var row = '<tr><td>' +
+                                    item.Name +
+                                    '</td><td>' +
+                                    item.TotalSales +
+                                    '</td><td>' +
+                                    item.TotalVehicles +
+                                    '</td></tr>';
+                                $('#salesTable').append(row);
+                            });
+                            $('#errorMessages').hide();
+                        },
+                        error: function (xHR) {
+                            $('#errorMessages').text(xHR.responseText);
+                            $('#errorMessages').show();
+                        }
+                    });
+                });
+        });
+    </script>
+}

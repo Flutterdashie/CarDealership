@@ -224,8 +224,8 @@
                             PurchaseType: $('#purchaseType').val(),
                             CustomerName: $('#name').val()
                         }),
-                        success: function(data, status) {
-                            alert(data.responseText);
+                        success: function(jqXHR) {
+                            alert(jqXHR.responseText);
                             window.location.href = '/Sales/Index';
                         }
                     });

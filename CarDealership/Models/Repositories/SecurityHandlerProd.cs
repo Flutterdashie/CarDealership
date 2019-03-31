@@ -133,5 +133,39 @@ namespace CarDealership.Models.Repositories
                 return null;
             }
         }
+
+        public IEnumerable<UserView> GetSalesUsers()
+        {
+            //TODO: Turn all of this into more direct accesses probably
+            //Looking back, I now realize that I could've accessed this through the context, and could've stored the first name and last name as part of the user. I'll probably fix this later, but for now, here's another ADO usage. 
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = "Server=localhost;Database=CarDealership;User Id=CarApp;Password=Testing123;";
+                SqlCommand cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "GetUsersByRole"
+                };
+                cmd.Parameters.AddWithValue("@Role", "Sales");
+                conn.Open();
+                using (SqlDataReader input = cmd.ExecuteReader())
+                {
+                    while (input.Read())
+                    {
+                        yield return new UserView
+                        {
+                            Email = input["Email"].ToString(),
+                            FirstName = input["FirstName"].ToString(),
+                            LastName = input["LastName"].ToString(),
+                            Role = input["Role"].ToString(),
+                            UserID = input["UserID"].ToString()
+                        };
+                    }
+                }
+
+                yield break;
+            }
+        }
     }
 }

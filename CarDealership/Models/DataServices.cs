@@ -242,15 +242,24 @@ namespace CarDealership.Models
         {
             return from purchase in _repo.GetPurchases()
                 where purchase.PurchaseDate >= startDate && purchase.PurchaseDate <= endDate
-                where !string.IsNullOrWhiteSpace(userID) || purchase.SellerID == userID
+                where string.IsNullOrWhiteSpace(userID) || purchase.SellerID == userID
                 group purchase by purchase.SellerID
                 into p
                 select new JObject
                 {
-                    {"Name", GetFirstLast(userID)},
+                    {"Name", GetFirstLast(p.Key)},
                     {"TotalSales", $"{p.Sum(i => i.Price):C0}"},
                     {"TotalVehicles", p.Count()}
                 };
+        }
+
+        public IEnumerable<JObject> GetSalesUsers()
+        {
+            return _secRepo.GetSalesUsers().Select(u => new JObject
+            {
+                {"ID", u.UserID},
+                {"FullName", $"{u.FirstName} {u.LastName}"}
+            });
         }
 
         private static string GetFirstLast(string userID)

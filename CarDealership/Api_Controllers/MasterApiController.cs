@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -440,6 +441,33 @@ namespace CarDealership.Api_Controllers
         }
 
         #endregion
+
+        private static readonly string[] AllowedTypes = new string[]
+        {
+            "png","jpg","jpeg"
+        };
+
+        [Route("api/test/images/{id}"),Authorize(Roles = "Admin"),HttpPost]
+        public IHttpActionResult ImagesHere(int id)
+        {
+            var firstTest = HttpContext.Current.Request.Files["Image"];
+            if (firstTest == null)
+            {
+                return BadRequest("Could not find uploaded image file.");
+            }
+            string[] test = firstTest.ContentType.Split('/');
+            if (test.Length != 2 || test[0] != "image")
+            {
+                return BadRequest("File does not seem to be an image");
+            }
+
+            if (!AllowedTypes.Contains(test[1]))
+            {
+                return BadRequest("Provided image is not of a supported type.");
+            }
+            firstTest.SaveAs(Path.Combine(HttpContext.Current.Server.MapPath("~/Images/"),$"inventory-{id}.{test[1]}"));
+            return Ok("Image uploaded.");
+        }
 
     }
 }

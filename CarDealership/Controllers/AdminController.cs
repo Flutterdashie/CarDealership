@@ -78,5 +78,11 @@ namespace CarDealership.Controllers
         {
             return View();
         }
+
+        [Route("Admin/ImageTest")]
+        public ActionResult ImageTest()
+        {
+            return View();
+        }
     }
 }

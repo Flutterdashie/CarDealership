@@ -248,6 +248,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repositories\DataHandlerMock.cs" />
+    <Compile Include="Models\Repositories\IDataHandler.cs" />
     <Compile Include="Models\Repositories\SecurityHandlerProd.cs" />
     <Compile Include="Models\ServiceModels\CarSearchFIiters.cs" />
     <Compile Include="Models\DataModels\Contact.cs">

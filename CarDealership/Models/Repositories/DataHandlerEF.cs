@@ -11,7 +11,7 @@ using CarDealership.Models.ServiceModels;
 
 namespace CarDealership.Models.Repositories
 {
-    public class DataHandlerEF
+    public class DataHandlerEF : IDataHandler
     {
         private static CarDealershipEntities _database = new CarDealershipEntities();
         public IEnumerable<Car> SearchCars(bool isAdmin, bool isSales, bool isNew, int minYear, int maxYear, decimal minPrice, decimal maxPrice, string makeModelYear)
@@ -180,7 +180,6 @@ namespace CarDealership.Models.Repositories
 
         public Contact AddContact(string contactName, string contactMsg, string email, string phone)
         {
-            //TODO: Test this
             Contact newContact = _database.Contacts.Create();
             newContact.ContactName = contactName;
             newContact.ContactMessage = contactMsg;

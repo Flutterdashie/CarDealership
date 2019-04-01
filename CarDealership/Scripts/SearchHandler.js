@@ -52,10 +52,11 @@ $('#searchForm').on('submit',
                 $.each(data, function (index, item) {
                     var detailsLink = '<button class="btn btn-primary" onclick="Activate(';
                     detailsLink += item.ID + ')">' + buttonLabel + '</button>';
-                    var row = '<div><table><tr><th>' + item.Year + ' ' + item.Make + ' ' + item.Model + '</th></tr>';
+                    var row = '<div class="row"><div class="col-3"><img src="/Images/inventory-' + item.ID + '.' + item.ImgExt + '" alt="Car Picture"/></div>';
+                    row += '<div class="col-9"><table><tr><th>' + item.Year + ' ' + item.Make + ' ' + item.Model + '</th></tr>';
                     row += '<tr><td>Body Style: ' + item.Body + '</td><td>Interior: ' + item.Interior + '</td><td>Sale Price: ' + item.SalePrice + '</td></tr>';
                     row += '<tr><td>Trans: ' + item.Transmission + '</td><td>Mileage: ' + item.Mileage + '</td><td>MSRP: ' + item.MSRP + '</td></tr>';
-                    row += '<tr><td>Color: ' + item.Color + '</td><td>VIN: ' + item.VIN + '</td><td>' + detailsLink + '</td></tr></div>';
+                    row += '<tr><td>Color: ' + item.Color + '</td><td>VIN: ' + item.VIN + '</td><td>' + detailsLink + '</td></tr></div></div>';
                     $('#vehicleList').append(row);
                 });
                 $('#errorMessages').hide();

@@ -194,10 +194,10 @@ namespace CarDealership.Models
         {
             return _repo.GetFeatured().Select(c => new JObject
             {
+                {"ImgPath",$"/Images/inventory-{c.CarID}.{c.ImgExtension}"},
                 {"MakeModelYear",c.CarYear + " " + c.Make.MakeName + " " + c.Model.ModelName},
                 {"Price", $"{c.SalePrice:C}"}
             });
-            throw new NotImplementedException();
         }
 
         #region Reports
@@ -327,7 +327,8 @@ namespace CarDealership.Models
                 {"Description",input.CarDescription },
                 {"IsNew",input.IsNew ? 1 : 0 },
                 {"IsFeatured",input.IsFeatured ? 1 :0 },
-                {"IsPurchased",input.Purchases.Any()? 1 : 0}
+                {"IsPurchased",input.Purchases.Any()? 1 : 0},
+                {"ImgExt",input.ImgExtension}
             };
         }
 

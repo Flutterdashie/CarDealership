@@ -24,6 +24,7 @@
           <Property Name="CarDescription" Type="varchar(max)" Nullable="false" />
           <Property Name="IsNew" Type="bit" Nullable="false" />
           <Property Name="IsFeatured" Type="bit" Nullable="false" />
+          <Property Name="ImgExtension" Type="varchar" MaxLength="4" />
         </EntityType>
         <EntityType Name="Contacts">
           <Key>
@@ -178,6 +179,7 @@
           <NavigationProperty Name="Make" Relationship="Self.fk_Cars_Makes" FromRole="Cars" ToRole="Makes" />
           <NavigationProperty Name="Model" Relationship="Self.fk_Cars_Models" FromRole="Cars" ToRole="Models" />
           <NavigationProperty Name="Purchases" Relationship="Self.fk_Purchases_Cars" FromRole="Cars" ToRole="Purchases" />
+          <Property Name="ImgExtension" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Make">
           <Key>
@@ -320,6 +322,7 @@
           <EntitySetMapping Name="Cars">
             <EntityTypeMapping TypeName="CarDealershipModel.Car">
               <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="ImgExtension" ColumnName="ImgExtension" />
                 <ScalarProperty Name="CarID" ColumnName="CarID" />
                 <ScalarProperty Name="VIN" ColumnName="VIN" />
                 <ScalarProperty Name="BodyStyle" ColumnName="BodyStyle" />

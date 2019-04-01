@@ -35,6 +35,7 @@ namespace CarDealership.Models.DataModels
         public string CarDescription { get; set; }
         public bool IsNew { get; set; }
         public bool IsFeatured { get; set; }
+        public string ImgExtension { get; set; }
     
         public virtual Make Make { get; set; }
         public virtual Model Model { get; set; }

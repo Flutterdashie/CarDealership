@@ -2,10 +2,10 @@
 @{
     ViewBag.Title = "Index";
 }
-    <div class="carousel slide" id="bigBanner">
-        <div class="carousel-inner" id="bigDisplay">
-            <div class="item active">hi</div>
-            <div class="item">there</div>
+    <div class="carousel slide" id="bigBanner" data-ride="carousel">
+        <div class="carousel-inner text-center align-content-center" style="height: 150px;" id="bigDisplay">
+            <div class="carousel-item active">hi</div>
+            <div class="carousel-item">there</div>
         </div>
     </div>
     
@@ -29,10 +29,10 @@
                 },
                 success: function (data) {
                     $('#bigDisplay').empty();
-                    $('#bigDisplay').append('<div class="item active">Hi welcome to cars buying place</div>');
+                    $('#bigDisplay').append('<div class="carousel-item active">Hi welcome to cars buying place</div>');
                     $.each(data,
                         function (index, item) {
-                            var panel = '<div class="item"><h1>'+ item.Title +'</h1><h3>' + item.Description + '</h3></div>';
+                            var panel = '<div class="carousel-item"><h1>'+ item.Title +'</h1><h3>' + item.Description + '</h3></div>';
                             $('#bigDisplay').append(panel);
                         });
                 },
@@ -53,7 +53,7 @@
                     $('#featuredVehicles').empty();
                     $.each(data,
                         function (index, item) {
-                            var panel = '<div class="col-3 badge"><h3>' + item.MakeModelYear + '</h3><h4>' + item.Price + '</h4></div>';
+                            var panel = '<div class="col-3 badge"><img src="'+ item.ImgPath + '"/><h3>' + item.MakeModelYear + '</h3><h4>' + item.Price + '</h4></div>';
                             $('#featuredVehicles').append(panel);
                         });
                     PopulateSpecials();

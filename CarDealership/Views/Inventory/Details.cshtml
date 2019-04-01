@@ -12,9 +12,8 @@
 <h2>Vehicle Details</h2>
 
 <div class="row border-dark">
-    <div class="col-3">
+    <div class="col-3" id="iconZone">
         <h5 id="makeModelYear"></h5>
-        <img src="@filePath" alt="there might be a picture here someday"/>
     </div>
     <div class="col-9">
         <table>
@@ -77,6 +76,7 @@
                     $('#color').text(data.Color);
                     $('#vin').text(data.VIN);
                     $('#description').text(data.Description);
+                    $('#iconZone').append('<img src="/Images/inventory-' + data.ID + '.' + data.ImgExt + '" alt="Car Image"/>');
                     var button = '';
                     if (data.IsPurchased === 0) {
                         button = '<button type="button" class="btn btn-primary" onclick="Contact(\'' + data.VIN + '\')">Contact Us</button>';

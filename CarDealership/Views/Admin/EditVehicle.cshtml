@@ -183,6 +183,27 @@
                             IsFeatured: $('#isFeatured').prop('checked') ? 1 : 0
                         }),
                         success: function(data) {
+                            var fileList = $('#imageUploadFile').get(0).files;
+                            if (fileList.length > 0) {
+                                var sendData = new FormData();
+                                sendData.append('Image', fileList[0]);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/api/admin/images/' + data,
+                                    contentType: false,
+                                    processData: false,
+                                    data: sendData,
+                                    success: function() {
+                                        alert('Image and car edited successfully');
+                                        window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                                    },
+                                    error: function(jqXHR) {
+                                        alert('Image Upload failed. Note that car is still edited. Message: ' + jqXHR.responseText);
+                                        window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                                    }
+                                });
+                            }
+                            alert('No image found, car edits successful.');
                             window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
                         },
                         error: function(jqXHR) {

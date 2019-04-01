@@ -114,7 +114,8 @@ namespace CarDealership.Models.Repositories
                             ModelID = (int) input["ModelID"],
                             CarDescription = input["CarDescription"].ToString(),
                             IsNew = (int) input["Mileage"] < 1000,
-                            IsFeatured = (bool) input["IsFeatured"]
+                            IsFeatured = (bool) input["IsFeatured"],
+                            ImgExtension = input["ImgExtension"].ToString()
                         };
                         car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
                         car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);

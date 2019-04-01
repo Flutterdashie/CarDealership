@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Http;
 using CarDealership.Models;
@@ -464,6 +465,11 @@ namespace CarDealership.Api_Controllers
             if (!AllowedTypes.Contains(typeSplit[1]))
             {
                 return BadRequest("Provided image is not of a supported type.");
+            }
+
+            foreach (string fileEnd in AllowedTypes)
+            {
+                File.Delete(Path.Combine(HttpContext.Current.Server.MapPath("~/Images/"),$"inventory-{id}.{fileEnd}"));
             }
             postedFile.SaveAs(Path.Combine(HttpContext.Current.Server.MapPath("~/Images/"),$"inventory-{id}.{typeSplit[1]}"));
             return Ok("Image uploaded.");

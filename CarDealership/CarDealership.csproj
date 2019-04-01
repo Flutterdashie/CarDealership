@@ -323,7 +323,6 @@
     <Content Include="Views\Reports\Sales.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Specials.cshtml" />
-    <Content Include="Views\Admin\ImageTest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -447,25 +447,25 @@ namespace CarDealership.Api_Controllers
             "png","jpg","jpeg"
         };
 
-        [Route("api/test/images/{id}"),Authorize(Roles = "Admin"),HttpPost]
+        [Route("api/admin/images/{id}"),Authorize(Roles = "Admin"),HttpPost]
         public IHttpActionResult ImagesHere(int id)
         {
-            var firstTest = HttpContext.Current.Request.Files["Image"];
-            if (firstTest == null)
+            var postedFile = HttpContext.Current.Request.Files["Image"];
+            if (postedFile == null)
             {
                 return BadRequest("Could not find uploaded image file.");
             }
-            string[] test = firstTest.ContentType.Split('/');
-            if (test.Length != 2 || test[0] != "image")
+            string[] typeSplit = postedFile.ContentType.Split('/');
+            if (typeSplit.Length != 2 || typeSplit[0] != "image")
             {
                 return BadRequest("File does not seem to be an image");
             }
 
-            if (!AllowedTypes.Contains(test[1]))
+            if (!AllowedTypes.Contains(typeSplit[1]))
             {
                 return BadRequest("Provided image is not of a supported type.");
             }
-            firstTest.SaveAs(Path.Combine(HttpContext.Current.Server.MapPath("~/Images/"),$"inventory-{id}.{test[1]}"));
+            postedFile.SaveAs(Path.Combine(HttpContext.Current.Server.MapPath("~/Images/"),$"inventory-{id}.{typeSplit[1]}"));
             return Ok("Image uploaded.");
         }
 

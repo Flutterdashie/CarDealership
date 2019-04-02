@@ -122,10 +122,17 @@ namespace CarDealership.Models.Repositories
                             IsFeatured = (bool) input["IsFeatured"],
                             ImgExtension = input["ImgExtension"].ToString()
                         };
-                        car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
-                        car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);
-                        // ReSharper disable once PossibleNullReferenceException
-                        car.Purchases = _database.Cars.Find(id).Purchases;
+                        try
+                        {
+                            car.Model = _database.Models.FirstOrDefault(m => m.ModelID == car.ModelID);
+                            car.Make = _database.Makes.FirstOrDefault(m => m.MakeID == car.MakeID);
+                            // ReSharper disable once PossibleNullReferenceException
+                            car.Purchases = _database.Cars.Find(id).Purchases;
+                        }
+                        catch (InvalidOperationException)
+                        {
+                            //This is designed to stop unintended EF accesses from other projects where they are not needed. The data is not usually used this way, and can be populated in other ways, so this should be safe to add.
+                        }
                         conn.Close();
                         return car;
                     }

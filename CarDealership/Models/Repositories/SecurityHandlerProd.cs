@@ -106,7 +106,7 @@ namespace CarDealership.Models.Repositories
         {
             using (SqlConnection conn = new SqlConnection())
             {
-                conn.ConnectionString = new CarDealershipEntities().Database.Connection.ConnectionString;
+                conn.ConnectionString = "Server=localhost;Database=CarDealership;User Id=CarApp;Password=Testing123;";
                 SqlCommand cmd = new SqlCommand
                 {
                     Connection = conn,

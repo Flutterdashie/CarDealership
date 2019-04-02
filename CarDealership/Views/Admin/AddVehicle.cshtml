@@ -131,7 +131,7 @@
                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:55792/api/admin/AddVehicle/',
+                    url: '/api/admin/AddVehicle/',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
@@ -162,11 +162,11 @@
                             data: sendData,
                             success: function() {
                                 alert('Image and car created successfully');
-                                window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                                window.location.href = '/admin/EditVehicle/' + data;
                             },
                             error: function(jqXHR) {
                                 alert('Image Upload failed. Note that car is still created. Message: ' + jqXHR.responseText);
-                                window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                                window.location.href = '/admin/EditVehicle/' + data;
                             }
                         });
                         

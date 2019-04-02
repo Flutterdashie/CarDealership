@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using CarDealership.Models.DataModels;
@@ -62,20 +63,24 @@ namespace CarDealership.Models.Repositories
             _database.SaveChanges();
         }
 
-        public Make AddMake(string makeName)
+        public Make AddMake(string makeName, string userName)
         {
             Make newMake = _database.Makes.Create();
             newMake.MakeName = makeName;
+            newMake.UserAdded = userName;
+            newMake.DateAdded = DateTime.Today;
             Make output = _database.Makes.Add(newMake);
             _database.SaveChanges();
             return output;
         }
 
-        public Model AddModel(string modelName, int makeID)
+        public Model AddModel(string modelName, int makeID, string userName)
         {
             Model newModel = _database.Models.Create();
             newModel.ModelName = modelName;
             newModel.MakeID = makeID;
+            newModel.UserAdded = userName;
+            newModel.DateAdded = DateTime.Today;
             Model output = _database.Models.Add(newModel);
             _database.SaveChanges();
             return output;

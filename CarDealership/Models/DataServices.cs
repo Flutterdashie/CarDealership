@@ -105,16 +105,19 @@ namespace CarDealership.Models
         public IEnumerable<JObject> GetMakes()
         {
             //I almost forgot that linq could do this. Yay!
+            //TODO: Make this have a separate method so it doesn't expose usernames to everyone
             return _repo.GetMakes().OrderBy(m => m.MakeID).Select(make => new JObject
             {
                 {"MakeID", make.MakeID},
-                {"MakeName", make.MakeName}
+                {"MakeName", make.MakeName},
+                {"DateAdded",make.DateAdded.ToShortDateString()},
+                {"UserAdded",make.UserAdded}
             });
         }
 
         public int AddMake(JObject newMake)
         {
-            return _repo.AddMake(newMake["MakeName"].ToString()).MakeID;
+            return _repo.AddMake(newMake["MakeName"].ToString(),newMake["UserAdded"].ToString()).MakeID;
         }
 
         public IEnumerable<JObject> GetModels()
@@ -125,7 +128,9 @@ namespace CarDealership.Models
                 {"ModelID",model.ModelID},
                 {"ModelName",model.ModelName},
                 {"MakeID",model.MakeID},
-                {"MakeName",model.Make.MakeName}
+                {"MakeName",model.Make.MakeName},
+                {"UserAdded",model.UserAdded},
+                {"DateAdded",model.DateAdded.ToShortDateString()}
             });
         }
 
@@ -140,7 +145,7 @@ namespace CarDealership.Models
 
         public int AddModel(JObject newModel)
         {
-            return _repo.AddModel(newModel["ModelName"].ToString(), (int) newModel["MakeID"]).ModelID;
+            return _repo.AddModel(newModel["ModelName"].ToString(), (int) newModel["MakeID"], newModel["UserAdded"].ToString()).ModelID;
         }
 
         #region Specials

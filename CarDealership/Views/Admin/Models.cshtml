@@ -22,6 +22,8 @@
         <tr>
             <th>Make</th>
             <th>Model</th>
+            <th>Date Added</th>
+            <th>User</th>
         </tr>
     </thead>
     <tbody id="modelList"></tbody>
@@ -33,7 +35,7 @@
         function RepopulateList() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/models/',
+                url: '/api/admin/models/',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -42,7 +44,7 @@
                     $('#modelList').empty();
                     $.each(data,
                         function (index, item) {
-                            var row = '<tr><td>' + item.MakeName + '</td><td>' + item.ModelName + '</td></tr>';
+                            var row = '<tr><td>' + item.MakeName + '</td><td>' + item.ModelName + '</td><td>' + item.DateAdded + '</td><td>' + item.UserAdded + '</td></tr>'
                             $('#modelList').append(row);
                         });
                 },
@@ -59,7 +61,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/makes/',
+                url: '/api/admin/makes/',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -86,7 +88,7 @@
                     event.stopPropagation();
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:55792/api/admin/models/',
+                        url: '/api/admin/models/',
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'

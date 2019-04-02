@@ -18,6 +18,8 @@
         <tr>
             <th>Make ID</th>
             <th>Make Name</th>
+            <th>Date Added</th>
+            <th>User</th>
         </tr>
     </thead>
     <tbody id="makeList"></tbody>
@@ -29,7 +31,7 @@
         function RepopulateList() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/makes/',
+                url: '/api/admin/makes/',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -38,7 +40,7 @@
                     $('#makeList').empty();
                     $.each(data,
                         function (index, item) {
-                            var row = '<tr><td>' + item.MakeID + '</td><td>' + item.MakeName + '</td></tr>';
+                            var row = '<tr><td>' + item.MakeID + '</td><td>' + item.MakeName + '</td><td>' + item.DateAdded + '</td><td>' + item.UserAdded +  '</td></tr>';
                             $('#makeList').append(row);
                         });
                 },
@@ -60,7 +62,7 @@
                     event.stopPropagation();
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:55792/api/admin/makes/',
+                        url: '/api/admin/makes/',
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'

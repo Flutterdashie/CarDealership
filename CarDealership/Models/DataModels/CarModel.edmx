@@ -42,6 +42,8 @@
           </Key>
           <Property Name="MakeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MakeName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DateAdded" Type="date" Nullable="false" />
+          <Property Name="UserAdded" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Models">
           <Key>
@@ -50,6 +52,8 @@
           <Property Name="ModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModelName" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="MakeID" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="date" Nullable="false" />
+          <Property Name="UserAdded" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Purchases">
           <Key>
@@ -189,6 +193,8 @@
           <Property Name="MakeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_Makes" FromRole="Makes" ToRole="Cars" />
           <NavigationProperty Name="Models" Relationship="CarDealershipModel.fk_Models_Makes" FromRole="Make" ToRole="Model" />
+          <Property Name="DateAdded" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="UserAdded" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Model">
           <Key>
@@ -199,6 +205,8 @@
           <NavigationProperty Name="Cars" Relationship="Self.fk_Cars_Models" FromRole="Models" ToRole="Cars" />
           <Property Name="MakeID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Make" Relationship="CarDealershipModel.fk_Models_Makes" FromRole="Model" ToRole="Make" />
+          <Property Name="DateAdded" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="UserAdded" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -344,6 +352,8 @@
           <EntitySetMapping Name="Makes">
             <EntityTypeMapping TypeName="CarDealershipModel.Make">
               <MappingFragment StoreEntitySet="Makes">
+                <ScalarProperty Name="UserAdded" ColumnName="UserAdded" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="MakeID" ColumnName="MakeID" />
                 <ScalarProperty Name="MakeName" ColumnName="MakeName" />
               </MappingFragment>
@@ -352,6 +362,8 @@
           <EntitySetMapping Name="Models">
             <EntityTypeMapping TypeName="CarDealershipModel.Model">
               <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="UserAdded" ColumnName="UserAdded" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="MakeID" ColumnName="MakeID" />
                 <ScalarProperty Name="ModelID" ColumnName="ModelID" />
                 <ScalarProperty Name="ModelName" ColumnName="ModelName" />

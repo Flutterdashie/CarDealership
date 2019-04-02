@@ -196,6 +196,7 @@ namespace CarDealership.Api_Controllers
         {
             try
             {
+                newMake.Add("UserAdded",User.Identity.GetUserName());
                 return Ok(_dataSource.AddMake(newMake));
             }
             catch
@@ -204,7 +205,7 @@ namespace CarDealership.Api_Controllers
             }
         }
 
-        [Route("api/Admin/Models"), AllowAnonymous, HttpGet]
+        [Route("api/Admin/Models"), Authorize(Roles = "Admin"), HttpGet]
         public IHttpActionResult Models()
         {
             return Ok(_dataSource.GetModels());
@@ -221,6 +222,7 @@ namespace CarDealership.Api_Controllers
         {
             try
             {
+                newModel.Add("UserAdded",User.Identity.GetUserName());
                 return Ok(_dataSource.AddModel(newModel));
             }
             catch

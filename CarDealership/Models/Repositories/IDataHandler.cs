@@ -23,9 +23,9 @@ namespace CarDealership.Models.Repositories
 
          void EditVehicle(Car editedVehicle);
 
-         Make AddMake(string makeName);
+         Make AddMake(string makeName, string userName);
 
-         Model AddModel(string modelName, int makeID);
+         Model AddModel(string modelName, int makeID, string userName);
 
          Car GetVehicleByID(int id);
 

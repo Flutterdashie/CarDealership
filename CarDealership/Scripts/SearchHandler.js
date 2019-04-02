@@ -7,7 +7,7 @@ $('#searchForm').on('submit',
         'use strict';
         event.preventDefault();
         event.stopPropagation();
-        var urlString = 'http://localhost:55792/api/';
+        var urlString = '/api/';
         var buttonLabel = '';
         switch ($('#searchType').val()) {
             //These are all based on page title

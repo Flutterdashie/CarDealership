@@ -49,12 +49,12 @@ namespace CarDealership.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public Make AddMake(string makeName)
+        public Make AddMake(string makeName, string userName)
         {
             throw new NotImplementedException();
         }
 
-        public Model AddModel(string modelName, int makeID)
+        public Model AddModel(string modelName, int makeID, string userName)
         {
             throw new NotImplementedException();
         }

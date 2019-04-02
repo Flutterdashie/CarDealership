@@ -1,7 +1,7 @@
 ﻿function UpdateModels() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/models/' + $('#carMake').val(),
+                url: '/api/admin/models/' + $('#carMake').val(),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -26,7 +26,7 @@
         function UpdateMakes() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/makes/',
+                url: '/api/admin/makes/',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

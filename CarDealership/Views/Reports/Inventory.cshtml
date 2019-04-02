@@ -39,14 +39,12 @@
     <script type="text/javascript">
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:55792/api/Reports/Inventory',
+            url: '/api/Reports/Inventory',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             success: function (data) {
-                $('#bigDisplay').empty();
-                $('#bigDisplay').append('<div class="item active">Hi welcome to cars buying place</div>');
                 $.each(data[0],
                     function (index, item) {
                         var row = '<tr><td>' + item.Year + '</td><td>' + item.MakeName + '</td><td>' + item.ModelName;

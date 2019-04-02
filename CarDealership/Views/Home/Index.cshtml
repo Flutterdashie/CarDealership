@@ -22,7 +22,7 @@
         function PopulateSpecials() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/Home/Specials',
+                url: '/api/Home/Specials',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -44,7 +44,7 @@
         function PopulateFeatured() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/Home/Index',
+                url: '/api/Home/Index',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

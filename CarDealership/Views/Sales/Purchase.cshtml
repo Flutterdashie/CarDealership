@@ -149,7 +149,7 @@
         $(document).ready(function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/Sales/Purchase/' + @Model,
+                url: '/api/Sales/Purchase/' + @Model,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -205,7 +205,7 @@
                     event.stopPropagation();
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:55792/api/Sales/Purchase/' + @Model,
+                        url: '/api/Sales/Purchase/' + @Model,
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'

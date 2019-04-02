@@ -46,7 +46,7 @@
         $(document).ready(function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/users/' + '@Model.UserID',
+                url: '/api/admin/users/' + '@Model.UserID',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -69,7 +69,7 @@
                     event.stopPropagation();
                     $.ajax({
                         type: 'PUT',
-                        url: 'http://localhost:55792/api/admin/users/',
+                        url: '/api/admin/users/',
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'

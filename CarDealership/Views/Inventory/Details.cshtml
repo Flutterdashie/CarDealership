@@ -60,7 +60,7 @@
         $(document).ready(function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/Inventory/Details/' + @Model,
+                url: '/api/Inventory/Details/' + @Model,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

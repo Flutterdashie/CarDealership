@@ -138,13 +138,13 @@
             //Delete stuff here
             $.ajax({
                 type: 'DELETE',
-                url: 'http://localhost:55792/api/admin/DeleteVehicle/' +id,
+                url: '/api/admin/DeleteVehicle/' +id,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 success: function(data) {
-                    window.location.href = 'http://localhost:55792/admin/Vehicles';
+                    window.location.href = '/admin/Vehicles';
                 },
                 error: function(jqXHR) {
                     alert(jqXHR.responseText);
@@ -160,7 +160,7 @@
                     event.preventDefault();
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:55792/api/admin/EditVehicle/' +$('#carID').val(),
+                        url: '/api/admin/EditVehicle/' +$('#carID').val(),
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
@@ -195,16 +195,16 @@
                                     data: sendData,
                                     success: function() {
                                         alert('Image and car edited successfully');
-                                        window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                                        window.location.href = '/admin/EditVehicle/' + data;
                                     },
                                     error: function(jqXHR) {
                                         alert('Image Upload failed. Note that car is still edited. Message: ' + jqXHR.responseText);
-                                        window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                                        window.location.href = '/admin/EditVehicle/' + data;
                                     }
                                 });
                             }
                             alert('No image found, car edits successful.');
-                            window.location.href = 'http://localhost:55792/admin/EditVehicle/' + data;
+                            window.location.href = '/admin/EditVehicle/' + data;
                         },
                         error: function(jqXHR) {
                             alert(jqXHR.responseText);
@@ -214,7 +214,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:55792/api/admin/EditVehicle/' + @Model,
+                url: '/api/admin/EditVehicle/' + @Model,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

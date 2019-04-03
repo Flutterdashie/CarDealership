@@ -4,14 +4,14 @@
 }
 
 <h2>Models</h2>
-<form id="addModel" class="form-horizontal">
+<form id="addModel" class="form-inline">
     <div class="form-group">
         <label for="newModel">New Model: </label>
-        <input type="text" name="newModel" id="newModel" />
+        <input type="text" name="newModel" id="newModel" required/>
     </div>
     <div class="form-group">
         <label for="makePicker">Make: </label>
-        <select name="makePicker" id="makePicker"></select>
+        <select name="makePicker" id="makePicker" required></select>
     </div>
     <div class="form-group"><button class="btn btn-primary" id="submitBtn" type="submit">Save</button></div>
 </form>

@@ -2,11 +2,6 @@
 
 @{
     ViewBag.Title = "Details";
-    string pathPart = "/Images/inventory-" + Model;
-    string pngPath = Server.MapPath(pathPart + ".png");
-    string jpgPath = Server.MapPath(pathPart + ".jpg");
-    string jpegPath = Server.MapPath(pathPart + ".jpeg");
-    string filePath = ((File.Exists(jpgPath)) ? pathPart + ".jpg" : (File.Exists(pngPath)) ? pathPart + ".png" : (File.Exists(jpegPath)) ? pathPart + ".jpeg" : "");
 }
 
 <h2>Vehicle Details</h2>

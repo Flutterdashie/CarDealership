@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "AddVehicle";
+    ViewBag.Title = "Add Vehicle";
 }
 
-<h2>AddVehicle</h2>
+<h2>Add Vehicle</h2>
 
 <form id="newCar">
     <div class="row">
@@ -84,7 +84,7 @@
 
         <div class="col-6 form-group">
             <label for="carVIN">VIN</label>
-            <input class="form-control" type="text" id="carVIN" required />
+            <input class="form-control" type="text" id="carVIN" required maxlength="17" size="17" />
         </div>
     </div>
 
@@ -104,7 +104,7 @@
     <div class="row">
         <div class="col-12 form-group">
             <label for="carDesc">Description</label>
-            <textarea id="carDesc" class="form-control"></textarea>
+            <textarea id="carDesc" class="form-control" required></textarea>
         </div>
     </div>
 

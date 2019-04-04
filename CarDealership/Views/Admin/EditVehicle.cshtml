@@ -158,6 +158,11 @@
                 function(event) {
                     event.stopPropagation();
                     event.preventDefault();
+                    if ($('#carModel').val() == -2) {
+                        alert('Please fill out the make and model fields properly.');
+                        return;
+                    }
+
                     $.ajax({
                         type: 'POST',
                         url: '/api/admin/EditVehicle/' +$('#carID').val(),
